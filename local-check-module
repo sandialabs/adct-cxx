@@ -1,0 +1,6 @@
+if declare -f module >/dev/null 2>&1; then
+	:
+else
+	echo "The 'module' function is not defined."
+	exit 1
+fi

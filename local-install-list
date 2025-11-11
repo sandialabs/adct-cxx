@@ -1,0 +1,18 @@
+# where blt source tree clone is found
+BLT_SRC=
+# prefix where you want ADC c++ installed
+ADC_PREFIX=
+# prefix where LDMS libraries are installed
+LDMS_PREFIX=
+# prefix where adiak libraries are installed
+ADIAK_PREFIX=
+
+# for local development, the following are often useful
+# BLT_SRC=$(pwd)/../blt
+# LDMS_PREFIX=$(pwd)/../inst-ldms
+# or
+# LDMS_PREFIX=/usr
+# ADIAK_PREFIX=$(pwd)/../inst-adiak
+# and if you replace VARIANT below with the flavor of ADC you are building:
+# ADC_PREFIX=$(pwd)/../inst-adc-VARIANT
+

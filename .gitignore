@@ -1,3 +1,27 @@
+test.main
+cbuild.mpi
+cbuild.nompi
+*.i
+slurm*err
+slurm*out
+mpi.simple.demo
+test.bmain
+mpi.demo.builder
+demo.builder
+test.builder
+a.out
+out.file.log
+test.encode
+test.json
+typescript
+test.outputs
+x.c
+x.cpp
+x.cxx
+x.sh
+y.c
+y.cxx
+
 # Prerequisites
 *.d
 

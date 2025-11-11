@@ -1,0 +1,26 @@
+#ifndef adc_config
+#define adc_config
+/*! \file adc_config.h
+ * \brief A generated file for build-configuration discoveries.
+ */
+
+/*!
+ADC_VISIBLE should be the same as BOOST_SYMBOL_VISIBLE, if
+boost were present. It controls which symbols are exported from a library.
+It's fixed (gcc, clang, intel compilers) for now, and may become
+generated if we ever go to exclusively cmake builds.
+*/
+#define ADC_VISIBLE __attribute__((visibility("default")))
+
+#cmakedefine ADC_BUILDER
+
+/*!
+ADC_HAVE_MPI is tested with ifdef
+*/
+#cmakedefine ADC_HAVE_MPI
+
+#cmakedefine ADC_HAVE_ADIAK
+
+#cmakedefine ADC_HAVE_LDMS
+
+#endif

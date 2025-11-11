@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+
+set_and_check(adc_cxx_INCLUDE_DIR "@PACKAGE_adc_cxx_INSTALL_INCLUDE_DIR@")
+
+include(${CMAKE_CURRENT_LIST_DIR}/adc_cxx-targets.cmake)
+
+set(adc_cxx_INCLUDE_DIRS ${adc_cxx_INCLUDE_DIR})
+set(adc_cxx_LIBRARIES adc_cxx::adc_cxx)
+
+check_required_components(adc_cxx)
