@@ -27,7 +27,7 @@ Example build instructions are provided in scripts build.*:
 	./build.cmake
 - No MPI
 	./build.nompi.cmake
-- LDMS co-development
+- LDMS / Adiak co-development
 	./build.cmake.third
 
 The build.\* scripts depend on site specific input parameters (see local-install-list)
