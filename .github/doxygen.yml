@@ -3,7 +3,10 @@ name: doxygen build
 on:
   push:
     branches:
-      - main
+      - gh-pages
+  pull_request:
+    branches:
+      - gh-pages
 
 jobs:
   build:
