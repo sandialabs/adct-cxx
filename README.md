@@ -1,7 +1,7 @@
 # adct-cxx
 Application Data Collection Toolkit for C++
 
-- This is a library-only ADC c++ implementation.
+- This is a library-only ADC c++ implementation for https://github.com/sandialabs/adct .
   - It depends at build time on boost::json headers, but exposes to the
     application code only c++17 standard dependencies.
   - A single factory class provides interface-only objects.
