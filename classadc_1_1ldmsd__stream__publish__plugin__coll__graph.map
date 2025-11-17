@@ -1,0 +1,5 @@
+<map id="adc::ldmsd_stream_publish_plugin" name="adc::ldmsd_stream_publish_plugin">
+<area shape="rect" id="Node000001" title="ldmsd_stream_publish utility publisher_api implementation. This plugin generates a scratch file (in&#45;m..." alt="" coords="5,79,205,119"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1publisher__api.html" title="Publisher plugin interface." alt="" coords="35,5,175,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,44,108,79,103,79,103,44"/>
+</map>

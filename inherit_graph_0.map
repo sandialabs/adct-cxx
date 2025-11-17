@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classadc_1_1builder__api.html" title="The builder api is used to construct structured log (json) messages that follow naming conventions." alt="" coords="5,5,131,31"/>
+<area shape="rect" id="Node000001" href="$classadc_1_1builder.html" title="Implementation of builder_api with optional (compile&#45;time) support of MPI. If compiled without MPI,..." alt="" coords="179,5,277,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="144,15,178,15,178,21,144,21"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="adc::libldms_msg_publish_plugin" name="adc::libldms_msg_publish_plugin">
+<area shape="rect" id="Node000001" title="libldms_msg_publish publisher_api implementation. This plugin calls the ldms libraries for sending me..." alt="" coords="5,79,196,119"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1publisher__api.html" title="Publisher plugin interface." alt="" coords="31,5,171,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,44,103,79,98,79,98,44"/>
+</map>

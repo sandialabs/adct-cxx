@@ -1,0 +1,5 @@
+<map id="adc::builder_api" name="adc::builder_api">
+<area shape="rect" id="Node000001" title="The builder api is used to construct structured log (json) messages that follow naming conventions." alt="" coords="5,5,131,31"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1builder.html" title="Implementation of builder_api with optional (compile&#45;time) support of MPI. If compiled without MPI,..." alt="" coords="19,79,117,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,44,71,79,65,79,65,44"/>
+</map>

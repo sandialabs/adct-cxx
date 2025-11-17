@@ -1,0 +1,5 @@
+<map id="adc::libcurl_plugin" name="adc::libcurl_plugin">
+<area shape="rect" id="Node000001" title="NOT yet implemented publisher plugin that will eventually use libcurl." alt="" coords="5,79,145,104"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1publisher__api.html" title="Publisher plugin interface." alt="" coords="5,5,145,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,44,78,79,73,79,73,44"/>
+</map>

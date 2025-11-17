@@ -1,0 +1,5 @@
+<map id="adc::multifile_plugin" name="adc::multifile_plugin">
+<area shape="rect" id="Node000001" title="Parallel file output publisher_api implementation. This plugin generates writes each message to the c..." alt="" coords="5,79,160,104"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1publisher__api.html" title="Publisher plugin interface." alt="" coords="13,5,153,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,44,85,79,80,79,80,44"/>
+</map>

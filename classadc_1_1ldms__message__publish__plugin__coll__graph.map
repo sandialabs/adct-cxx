@@ -1,0 +1,5 @@
+<map id="adc::ldms_message_publish_plugin" name="adc::ldms_message_publish_plugin">
+<area shape="rect" id="Node000001" title="ldms_message_publish utility publisher_api implementation. This plugin generates a scratch file (in&#45;m..." alt="" coords="5,79,211,119"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1publisher__api.html" title="Publisher plugin interface." alt="" coords="38,5,178,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,44,111,79,105,79,105,44"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="adc::libadiak_many_plugin" name="adc::libadiak_many_plugin">
+<area shape="rect" id="Node000001" title="Terminal output publisher_api implementation. This plugin sends messages to libadiak synchronously...." alt="" coords="5,79,155,119"/>
+<area shape="rect" id="Node000002" href="$classadc_1_1publisher__api.html" title="Publisher plugin interface." alt="" coords="10,5,150,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,44,83,79,77,79,77,44"/>
+</map>
