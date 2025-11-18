@@ -5,7 +5,7 @@ Application Data Collection Toolkit for C++
   - It depends at build time on boost::json headers, but exposes to the
     application code only c++17 standard dependencies.
   - A single factory class provides interface-only objects.
-  - Documentation is generated during the build and installed.
+  - Documentation is generated during the build and installed (also available at: https://sandialabs.github.io/adct-cxx/).
 
 - The blt source from https://github.com/LLNL/blt.git is required to build
   - check that https\_proxy is set as needed to reach github, if needed.
