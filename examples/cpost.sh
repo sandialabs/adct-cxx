@@ -17,3 +17,7 @@ if grep collection $log; then
 else
 	echo see $log for unexpected output
 fi
+# Copyright 2025 NTESS. See the top-level LICENSE.txt file for details.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#

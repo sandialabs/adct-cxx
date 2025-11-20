@@ -1,3 +1,7 @@
+/* Copyright 2025 NTESS. See the top-level LICENSE.txt file for details.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #define SYSLOG_NAMES
 #include <syslog.h>
 #include <adc/builder/builder.hpp>

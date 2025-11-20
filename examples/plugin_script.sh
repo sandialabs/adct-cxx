@@ -12,3 +12,7 @@ if test "x$1" = "x"; then
 fi
 json_reformat < $1 >> test.outputs/script
 /bin/rm $1
+# Copyright 2025 NTESS. See the top-level LICENSE.txt file for details.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#

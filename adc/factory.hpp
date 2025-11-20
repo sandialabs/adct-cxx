@@ -1,3 +1,7 @@
+/* Copyright 2025 NTESS. See the top-level LICENSE.txt file for details.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #ifndef adc_factory_hpp
 #define adc_factory_hpp
 #include <string>
