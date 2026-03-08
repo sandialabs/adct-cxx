@@ -28,7 +28,7 @@ std::map<std::string, std::string> file_config =
 
 std::map<std::string, std::string> curl_config =
 	{
-		{"URL", "https://dasc-data.sandia.gov/log"}
+		{"URL", "https://data-submission-server.your.org/log"}
 	};
 
 std::map<std::string, std::string> ldmsd_stream_publish_config =

@@ -1,5 +1,5 @@
 #! /bin/bash
-echo build.cmake >> .last-build
+echo build.cmake >> .last-rebuild
 # load the PREFIX variables
 # specific to your site
 . local-install-list
@@ -19,20 +19,6 @@ module load aue/gcc/14.2.0
 module load aue/openmpi/5.0.6-gcc-14.2.0
 module load aue/boost/1.88.0-gcc-14.2.0-openmpi-5.0.6
 module load cmake
-mkdir -p cbuild.mpi
 cd cbuild.mpi
-echo "cmake at: $(which cmake)"
-echo "g++ at: $(which g++)"
-echo "ltdl at: $(which ltdl)"
-echo "libtool at: $(which libtool)"
-echo "ld at: $(which ld)"
-cmake -DBLT_SOURCE_DIR=$BLT_SRC \
-	-DBUILD_SHARED_LIBS=On \
-	-DENABLE_MPI=On \
-	-DENABLE_DOC=On \
-	-DCMAKE_INSTALL_PREFIX=$ADC_PREFIX \
-	-DCFLAGS="-g" \
-	-DCMAKE_BUILD_TYPE=Debug \
-	-DENABLE_GTEST=Off \
-       	..
-VERBOSE=1 make && make install && make doc
+#VERBOSE=1 make && make install && make doc
+VERBOSE=1 make && make install

@@ -6,6 +6,7 @@
 #define adc_hpp
 #include "adc/adc_config.h"
 #include "adc/factory.hpp"
+#include "adc/utility.hpp"
 
 /** \brief Application Data Collection: Structured logging for scientific computing.
 \mainpage Application Data Collection (C++)
@@ -48,7 +49,8 @@ Initially, C++, Python, Java are supported, and likely this will expand to C, Fo
 Documented here is the C++17 standard library-based binding that has optional support for MPI.
 This binding follows the Factory pattern (\ref adc::factory). The factory provides json builder objects and publisher objects.
 
-A header-only binding (which, however, adds a boost dependency to the application build) is also in development.
+Interface support for later C++ standards is anticipated, as standard support for
+basic character and numerical types evolves.
 
 \section library Linking
 - Linking with -ladc-c++ provides a factory-based API without MPI dependencies.

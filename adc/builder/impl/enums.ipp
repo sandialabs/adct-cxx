@@ -338,6 +338,8 @@ const std::string to_string(void *data, scalar_type cptype, size_t count) // pre
 		o << "unsupported-by-build-" << to_string(cptype);
 		break;
 #endif
+	case cp_char8:
+		[[fallthrough]]; // when c++20 is the min
 	case cp_timespec:
 		[[fallthrough]];
 	case cp_timeval:

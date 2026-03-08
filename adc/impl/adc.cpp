@@ -14,6 +14,7 @@
 #include <adc/factory.hpp>
 #include <adc/builder/impl/enums.ipp>
 #include <adc/impl/factory.ipp>
+#include <adc/impl/utility.ipp>
 #ifdef ENABLE_B64
 #include <adc/builder/impl/b64.ipp>
 #endif

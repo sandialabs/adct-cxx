@@ -196,11 +196,33 @@ public:
 	/// \return vector of names, or an empty vector.
 	virtual std::vector< std::string > get_section_names() = 0;
 
-	/// \brief get the existing named field in the section.
+	/// \brief get the existing named nested field in the builder.
+	/// \param path a simple json path such as /a/b/c which resolves to
+	///        a value added via one of the add* functions.
 	/// \return the field description, with kt==k_none if not found.
-	/// If the value has kt==k_section, call get_section instead.
 	/// If the value was not set via this interface, k_none is returned
-	virtual const field get_value(std::string_view field_name) = 0;
+	/// If the returned value has kt==k_section, call get_section instead.
+	virtual const field get_value(std::string_view path) = 0;
+
+	/// \brief get the existing named nested scalar string value.
+	/// \param path a simple json path such as /a/b/c which resolves to
+	///        a value added via one of the add* functions.
+	/// \return NULL if the path is not matched or is not a string of some sort.
+	virtual const char *get_value_string(std::string_view path) = 0;
+
+	/// \brief get the existing named scalar value that can be correctly cast as int64_t
+	/// \param path a simple json path such as /a/b/c which resolves to
+	///        a value added via one of the add* functions.
+	/// \return INT64_MAX  if field_name is for data which is not
+	/// compatible with int64_t.
+	virtual int64_t get_value_int64(std::string_view path) = 0;
+
+	/// \brief get the existing named scalar value that can be correctly cast as int64_t
+	/// \param path a simple json path such as /a/b/c which resolves to
+	///        a value added via one of the add* functions.
+	/// \return UINT64_MAX if field_name is for data which is not
+	/// compatible with uint64_t.
+	virtual uint64_t get_value_uint64(std::string_view path) = 0;
 
 	/// \brief get the names of non-section fields in the section
 	/// \return vector of names, or an empty vector.
