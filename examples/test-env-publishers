@@ -1,0 +1,103 @@
+# snl values
+# the following two values are set in a proprietary .site file.
+# customize file to your site, or us ci/cd bot variables.
+ADC_FS_ROOT=
+TEST_ADC_URL=
+SYS=
+JOBID=
+. test-env-publishers.site
+
+TEST_LDMS_AUTH=munge
+TEST_LDMS_PORT=412
+
+# define the plugins for the multipublisher
+TEST_ALL_PUBS="curl:file:multifile:script:stdout:syslog:ldmsd_stream_publish:ldms_message_publish"
+TEST_LOCAL_PUBS="file:script:stdout:multifile"
+TEST_NET_PUBS="curl:syslog:ldmsd_stream_publish:ldms_message_publish"
+
+# default the multi_publisher to node-local ones; can be overridden.
+export ADC_MULTI_PUBLISHER_NAMES=$TEST_LOCAL_PUBS
+
+# example host env; common to snl HPC clusters
+export ADC_HOST_SECTION_ENV="SNLCLUSTER:SNLNETWORK:SNLSITE:SNLSYSTEM:SNLOS"
+
+# definition of ADC_WFID is a social process. Without social constraints,
+# the resource manager labeling is a good alternative.
+export ADC_WFID="$SYS$JOBID"
+
+# When not in a cluster, uuid can provide a unique WFID
+# workflow example WFIDs; $ANCESTOR_WFIDS may come from outside.
+# a workflow manager can tell all the codes in a common environment a unique id for the group
+### export ADC_WFID=$(uuid -v1 -F STR)
+
+# a nested workflow manager can tell all the codes in a common subenvironment a unique id for the subgroup
+# here we just fake one for testing.
+export ADC_WFID_PARENT=$(uuid -v1 -F STR)
+# deeply nested workflow manager can define the full workflow ancestry, if it knows.
+export ADC_WFID_PATH=$ANCESTOR_WFIDS/$ADC_WFID_PARENT/$ADC_WFID
+# When workflow tool creates uuids for children, it can share them for later use
+export ADC_WFID_CHILDREN="$(uuid -v1 -F STR):$(uuid -v1 -F STR):$(uuid -v1 -F STR)"
+
+# environment variables for syslog plugin
+export ADC_SYSLOG_PLUGIN_PRIORITY="info"
+
+# environment variables for curl subprocess plugin
+export ADC_CURL_PLUGIN_DIRECTORY="/dev/shm/adc"
+export ADC_CURL_PLUGIN_PROG="/usr/bin/curl"
+export ADC_CURL_PLUGIN_PORT="443"
+export ADC_CURL_PLUGIN_URL="$TEST_ADC_URL"
+export ADC_CURL_PLUGIN_DEBUG="0"
+
+# environment variables for file serial code plugin
+export ADC_FILE_PLUGIN_DIRECTORY="."
+export ADC_FILE_PLUGIN_FILE="adc.file_plugin.log"
+export ADC_FILE_PLUGIN_APPEND="false"
+export ADC_FILE_PLUGIN_DEBUG="0"
+
+# environment variables for file parallel code plugin
+export ADC_MULTIFILE_PLUGIN_DIRECTORY=$ADC_FS_ROOT/$WGTEAM
+export ADC_MULTIFILE_PLUGIN_DEBUG="1"
+export ADC_MULTIFILE_PLUGIN_DEBUG="0"
+# Normally rank should be defined in code rather than the environment,
+# using either setenv before creating the plugin instance
+# or passing rank to the publisher config setup.
+export ADC_MULTIFILE_PLUGIN_RANK=""
+
+# environment variables for ldmsd_stream_publish subprocess plugin
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_DIRECTORY="/dev/shm/adc"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_PROG="/usr/sbin/ldms_msg_publish"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_CHANNEL="adc_publish_api"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_AUTH="$TEST_LDMS_AUTH"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_PORT="$TEST_LDMS_PORT"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_HOST="localhost"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_AFFINITY="all"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_DEBUG="0"
+
+# environment variables for ldmsd_stream_publish subprocess plugin
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_DIRECTORY="/dev/shm/adc"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_PROG="/usr/sbin/ldmsd_stream_publish"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_STREAM="adc_publish_api"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_AUTH="$TEST_LDMS_AUTH"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_PORT="$TEST_LDMS_PORT"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_HOST="localhost"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_AFFINITY="all"
+export ADC_LDMSD_STREAM_PUBLISH_PLUGIN_DEBUG="0"
+
+# environment variables for the generic subprocess plugin
+export ADC_SCRIPT_PLUGIN_DIRECTORY="/dev/shm/adc"
+export ADC_SCRIPT_PLUGIN_PROG="$ADC_FS_ROOT/bin/adc_plugin_script.sh"
+export ADC_SCRIPT_PLUGIN_DEBUG="0"
+
+# environment variables for libcurl plugin
+export ADC_LIBCURL_PLUGIN_PORT=443
+export ADC_LIBCURL_PLUGIN_URL="$TEST_ADC_URL"
+
+# environment variables for libldms_msg plugin
+export ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_CHANNEL="adc_publish_api"
+export ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_AUTH="$TEST_LDMS_AUTH"
+export ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_PORT="$TEST_LDMS_PORT"
+export ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_HOST="localhost"
+
+# environment variables for libadiak_many plugin (none yet)
+#adc/publisher/impl/libadiak_many.ipp:	inline static const char *plugin_prefix = "ADC_ADIAK_MANY_PLUGIN_";
+

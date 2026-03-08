@@ -35,7 +35,8 @@ int get_priority_from_string(string s)
   This plugin sends messages to syslog synchronously.
   Multiple independent instances of this plugin may be used simultaneously,
   but the underlying syslog setting (priority) will be that
-  of the most recently created instance.
+  of the most recently created instance unless a map with "PRIORITY" is supplied
+  to config().
 
   If not configured, the default priority is LOG_INFO.
   env("ADC_SYSLOG_PLUGIN_PRIORITY") overrides the default

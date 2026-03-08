@@ -5,12 +5,6 @@
 #ifndef adc_publisher_ipp
 #define adc_publisher_ipp
 
-#ifdef ADC_DEBUG_MULTI_PUBLISHER
-#define multi_publisher_debug 1
-#else
-#define multi_publisher_debug 0
-#endif
-
 namespace adc {
 
 
@@ -29,7 +23,14 @@ private:
 	publisher_vector pvec;
 
 public:
-	multi_publisher() : vers("1.0.0") , tags({"none"}), state(ok), debug(multi_publisher_debug) {}
+	multi_publisher() : vers("1.0.0") , tags({"none"}), state(ok), debug(0) {
+		const char *env = getenv("ADC_MULTI_PUBLISHER_DEBUG");
+		if (env && !strcmp(env,"1") ) {
+			debug = 1;
+		} else {
+			debug = 0;
+		}
+	}
 
 
         string_view version() const {
@@ -37,7 +38,16 @@ public:
         }
 
 	void add(std::shared_ptr<publisher_api> p) {
+		if (!p && debug) {
+			std::cout <<
+				"multi_publisher: null publisher add ignored."
+				<< std::endl;
+		}
 		pvec.push_back(p);
+		if (debug) {
+			std::cout << "publisher added: "
+			       	<< p->name() << std::endl;
+		}
 	}
 
 	int publish(std::shared_ptr<builder_api> b)
@@ -49,9 +59,11 @@ public:
 			int e = element->publish(b);
 			if (e) {
 				err += 1;
-				if (debug)
-					std::cout << "publish failed for plugin "
+				if (debug) {
+					std::cout << "publish failed (" << e << 
+						") for plugin "
 				       		<< element->name() << std::endl;
+				}
 			}	
 		}
 		return err;

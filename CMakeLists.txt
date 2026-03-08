@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project (adc_cxx
          LANGUAGES CXX C
-         VERSION 0.1.0)
+         VERSION 1.0.0)
 
 set(ADC_BUILDER "cmake")
 set(BLT_CXX_STD "c++17" CACHE STRING "Version of C++ standard")
@@ -39,9 +39,6 @@ find_package(adiak)
 blt_import_library( NAME                     uuid
                     LINK_FLAGS               -luuid)
                     
-## Set the compiler flags; preferably on cmake line if needed.
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -g -O0 -Wall")
-
 if (ENABLE_DOC)
   add_subdirectory(doc)
 endif()
@@ -71,9 +68,6 @@ install(
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/adc_cxx")
 
 
-# Set the linker flags
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -lstdc++fs")
-
 # Set the include directories
 include_directories(${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${BOOST_ROOT}/include)
 
@@ -94,6 +88,7 @@ set(adc_cxx_public_headers
 	adc/adc.hpp
 	adc/types.hpp
 	adc/factory.hpp
+	adc/utility.hpp
 	adc/builder/impl/builder.hpp
 	adc/builder/builder.hpp
 	adc/publisher/multi_publisher.hpp
@@ -113,7 +108,6 @@ set(adc_cxx_pub_headers
 	adc/publisher/multi_publisher.hpp
 	adc/publisher/publisher.hpp)
 
-
 if (MPI_FOUND)
 	add_definitions("-DUSE_MPI")
 	set(ADC_HAVE_MPI 1)
@@ -132,8 +126,7 @@ if (ADIAK_FOUND)
 		adiak)
 endif()
 
-list(APPEND adc_cxx_dependencies
-	uuid)
+#list(APPEND adc_cxx_dependencies uuid)
 
 # Generate the adc_config.h header
 configure_file(adc/adc_config.h.in adc/adc_config.h)
@@ -162,7 +155,7 @@ target_include_directories(adc_cxx
 # Set the library properties
 set_target_properties(adc_cxx PROPERTIES
   SOVERSION 1
-  VERSION 0.1
+  VERSION 1.0
 )
 
 install(TARGETS
@@ -190,34 +183,30 @@ install(FILES
         DESTINATION include/adc/publisher)
 
 # Define the executable targets
+blt_add_executable(NAME test.builder
+	SOURCES examples/testBuilder.cpp
+	DEPENDS_ON adc_cxx stdc++fs uuid)
+
 blt_add_executable(NAME demo.builder
 	SOURCES examples/demoBuilder.cpp
-	DEPENDS_ON adc_cxx)
+	DEPENDS_ON adc_cxx stdc++fs uuid)
 
-add_executable(mpi.demo.builder	examples/mpiDemoBuilder.cpp)
-add_executable(mpi.simple.demo examples/mpiSimpleDemo.cpp)
-add_executable(test.builder examples/testBuilder.cpp)
+blt_add_executable(NAME adc.hello.world.auto
+	SOURCES	examples/adcHelloWorldAuto.cpp
+	DEPENDS_ON adc_cxx stdc++fs uuid)
 
-install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.simple.demo  ${CMAKE_BINARY_DIR}/bin/test.builder
+blt_add_executable(NAME mpi.demo.builder
+	SOURCES	examples/mpiDemoBuilder.cpp
+	DEPENDS_ON adc_cxx stdc++fs uuid)
+
+blt_add_executable(NAME mpi.simple.demo 
+	SOURCES examples/mpiSimpleDemo.cpp
+	DEPENDS_ON adc_cxx stdc++fs uuid)
+
+blt_add_executable(NAME adc.hello.world.mpi 
+	SOURCES examples/adcHelloWorldMPI.cpp
+	DEPENDS_ON adc_cxx stdc++fs mpi uuid pthread)
+
+install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.mpi ${CMAKE_BINARY_DIR}/bin/adc.hello.world.auto ${CMAKE_BINARY_DIR}/bin/demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.simple.demo  ${CMAKE_BINARY_DIR}/bin/test.builder
 	TYPE BIN )
-
-# Set the executable properties
-set_target_properties(demo.builder PROPERTIES
-  LINK_FLAGS "-lstdc++fs"
-)
-set_target_properties(mpi.demo.builder PROPERTIES
-  LINK_FLAGS "-lstdc++fs"
-)
-set_target_properties(mpi.simple.demo PROPERTIES
-  LINK_FLAGS "-lstdc++fs"
-)
-set_target_properties(test.builder PROPERTIES
-  LINK_FLAGS "-lstdc++fs"
-)
-
-# Link the executables against the library
-#target_link_libraries(demo.builder adc_cxx)
-target_link_libraries(mpi.demo.builder adc_cxx)
-target_link_libraries(mpi.simple.demo adc_cxx)
-target_link_libraries(test.builder adc_cxx)
 

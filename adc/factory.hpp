@@ -23,13 +23,6 @@ namespace adc {
  */
 inline version adc_factory_version("1.0.0", {"none"});
 
-// /FS/adc-log/$user/$adc_wfid/$app/$host-$pid_$start-$publisherptr.log
-// /FS/adc-log/$user/no_wfid/$app/$host-$pid_$start-$publisherptr.log
-// /FS/adc-log/$user/$cluster/$jobidraw/$task/$rank/$app/$host-$pid_$start-$publisherptr.log
-// get the list of consolidated logs from reduction of a multifile publisher tree.
-// FS/adc-log/ is multiuser; $user is owned/writable by $user
-std::vector<std::string> consolidate_multifile_logs(std::string_view dir, std::string_view match);
-
 /*!
   \brief provides publishers and builders of application metadata.
 
@@ -64,22 +57,32 @@ public:
 	 */
 	std::shared_ptr<multi_publisher_api> get_multi_publisher();
 
-	/** \return a multipublisher instance pre-populated from environment settings.
+	/** \return a multipublisher instance pre-populated using env_name.
+	   
+	    This function creates a multi_publisher pre-configured with the
+	    publisher plugins named in the given environment variable.
+	    If the environment variable given is the empty string, then
+	    publishers named in the environment variable ADC_MULTI_PUBLISHER_NAMES are created.
+	    Plugin names in the environment variable are colon-separated.
+	    In either case, the publishers are configured using their defaults and
+	    plugin-specific environment variables documented by each plugin implementation.
+	 */
+	std::shared_ptr<multi_publisher_api> get_multi_publisher_from_env(const std::string& env_name);
+
+	/** \return a multipublisher instance pre-populated from environment settings for the listed plugins.
 	   
 	    This function creates a multi_publisher pre-configured with the
 	    publisher plugins named in the input vector. If the input vector is empty,
-	    publishers named in the environment variable ADC_MULTI_PUBLISHER_NAMES are created.
-	    Plugin names in the environment variable are colon-separated.
-	    In both cases, the publishers are configured using their defaults and
-	    plugin-specific environment variables.
+	    this is equivalent to get_multi_publisher().
 	 */
-	std::shared_ptr<multi_publisher_api> get_multi_publisher(std::vector< std::string > & plugin_list);
+	std::shared_ptr<multi_publisher_api> get_multi_publisher_from_env(std::vector< std::string > & plugin_list);
 
 	/// \return an empty json builder object
 	std::shared_ptr<builder_api> get_builder();
 
 private:
 	std::set<std::string> names; //!< the list of publisher names
+	int debug;
 	void init();
 
 };  // class factory

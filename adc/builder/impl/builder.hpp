@@ -33,7 +33,7 @@ inline version builder_version("1.0.0", {"none"});
  support of MPI. If compiled without MPI, the mpi-related calls devolve
  to serial behavior.
  */
-class BOOST_SYMBOL_VISIBLE builder : public builder_api {
+class BOOST_SYMBOL_VISIBLE builder : public builder_api, public std::enable_shared_from_this< builder > {
 public:
 	builder(void *mpi_communicator_p=NULL);
 
@@ -85,7 +85,11 @@ public:
 	std::shared_ptr< builder_api > get_section(std::string_view name);
 	std::vector< std::string > get_section_names();
 	std::vector< std::string > get_field_names();
-	const field get_value(std::string_view name);
+	const field get_value(std::string_view path);
+	const char *get_value_string(std::string_view path);
+	int64_t get_value_int64(std::string_view path);
+	uint64_t get_value_uint64(std::string_view path);
+
 
 	void add(std::string_view name, bool value);
 
@@ -189,10 +193,9 @@ public:
 private:
 	// this is private because it must be of a specific structure, not arbitrary json
 	boost::json::object d;
-
+	bool debug; ///< true if ADC_BUILDER_DEBUG exists in the environment
 	key_type kind(std::string_view name);
 
-private:
 	std::map< std::string, std::shared_ptr< builder > > sections;
 	// merge sections recursively into a pure json object
 	boost::json::object flatten();

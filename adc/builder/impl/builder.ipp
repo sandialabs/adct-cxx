@@ -14,8 +14,13 @@
 #include <utility>
 #include <string>
 #include <cstdio>
+#include <cstdint>
 #include <boost/algorithm/string.hpp>
 #include <uuid/uuid.h>
+#include <version>
+#if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
+#include <span>
+#endif
 
 #include <adc/builder/impl/builder.hpp>
 #include <adc/builder/impl/outpipe.ipp>
@@ -26,7 +31,29 @@
 
 namespace adc {
 
+// \return true if name is not allowed in our json protocol.
+// keys containing . and / are escapable by the related search
+// RFCs, but we may want to warn about them in future.
+// / is not banned though it interferes with search using RFC6901
+// . is not banned though it interferes with search using RFC9535
+inline bool badkey(std::string_view /* name */) 
+{
+	// return (name.find_first_of("./") != std::string::npos);
+	// could put a warning here in debug mode
+	return false;
+}
 
+// \return view of s without leading or trailing character '/' (or other)
+std::string_view strip(std::string_view s, char c = '/')
+{
+    auto first = s.find_first_not_of(c);
+    if (std::string::npos == first) {
+        return "";
+    }
+    auto last = s.find_last_not_of(c);
+    auto len = last - first + 1;
+    return s.substr(first, len);
+}
 
 std::string tolower_s(std::string s)
 {
@@ -145,7 +172,6 @@ boost::json::object get_numa_hardware()
 		if (! numactl.rc) {
 			std::vector<std::string> cpulist;
 			std::vector<int64_t> sizes;
-			std::vector<std::string> numa_node;
 			shell_done = 1;
 			adc::pipe_data numactl = adc::out_pipe::run("numactl -H");
 			std::string line;
@@ -194,7 +220,7 @@ boost::json::object get_numa_hardware()
         return numa_json;
 }
 
-boost::json::object get_gpu_data()
+boost::json::object get_gpu_data(bool debug)
 {
 	static bool shell_done;
 	static boost::json::object gpu_json;
@@ -224,10 +250,14 @@ boost::json::object get_gpu_data()
 				if (name == "Class") {
 					std::string cname = boost::algorithm::trim_copy(line.substr(cp+1));
 					if (cname == "3D controller") {
-						// std::cerr << "add_host_section: found gpu " << gpu_count <<std::endl;
+						if (debug) {
+							std::cerr << "add_host_section: found gpu " << gpu_count <<std::endl;
+						}
 						gpu_count++;
 					} else {
-						// std::cerr << "add_host_section: found non-gpu " << cname <<std::endl;
+						if (debug) {
+							std::cerr << "add_host_section: found non-gpu " << cname <<std::endl;
+						}
 					}
 					continue;
 				}
@@ -255,13 +285,15 @@ boost::json::object get_gpu_data()
 				device.size() != gpu_count ||
 				rev.size() != gpu_count ||
 				numa_node.size() != gpu_count) {
-				std::cerr << "add_host_section: size mismatch " <<
-					gpu_count <<
-					vendor.size() <<
-					device.size() <<
-					rev.size() <<
-					numa_node.size() <<
-					std::endl;
+				if (debug) {
+					std::cerr << "add_host_section: size mismatch " <<
+						gpu_count <<
+						vendor.size() <<
+						device.size() <<
+						rev.size() <<
+						numa_node.size() <<
+						std::endl;
+				}
 				return gpu_json; // inconsistent data
 			}
 			gpu_json["gpu_count"] = gpu_count;
@@ -340,7 +372,7 @@ uint64_t get_memtotal()
 // on return, midata["valid"] is 1 if successful or 0 if a problem reading all
 // expected values.
 // produce data equivalent to free -k -w
-void update_meminfo()
+void update_meminfo(bool debug)
 {
 	std::ifstream in(MEMINFO_FILE);
 
@@ -355,7 +387,9 @@ void update_meminfo()
 			uint64_t val;
 			iss >> val;
 			if (iss.fail()) {
-				std::cerr << "error reading value for " << it->first << std::endl;
+				if (debug) {
+					std::cerr << "error reading value for " << it->first << std::endl;
+				}
 				continue;
 			}
 			it->second = val;
@@ -378,13 +412,19 @@ void update_meminfo()
 		midata["valid"] = 1;
 	} else {
 		midata["valid"] = 0;
+#ifdef ADC_MEMINFO_DEBUG
 		std::cerr << "read meminfo failed" << std::endl;
 		std::cerr << "count = " << count << std::endl;
 		std::cerr << "mdsize = " << midata.size()  << std::endl;
+#endif
 	}
 }
 
 builder::builder(void *mpi_communicator_p) : mpi_comm_p(mpi_communicator_p) {
+	const char *env = getenv("ADC_BUILDER_DEBUG");
+	if (env) {
+		debug = true;
+	}
 }
 
 // auto-populate the header section with application name
@@ -392,7 +432,7 @@ void builder::add_header_section(std::string_view application_name)
 {
 	uid_t uid = geteuid();
 	struct passwd pw;
-	struct passwd *pwp = NULL;
+	struct passwd *pwp = nullptr;
 	int bsize = sysconf(_SC_GETPW_R_SIZE_MAX);
 	if (bsize < 0)
 		bsize = 16384;
@@ -429,6 +469,7 @@ void builder::add_header_section(std::string_view application_name)
 	d["header"] = jv;
 }
 
+
 std::vector<std::string> split_string(const std::string& s, char delimiter)
 {
 	std::vector<std::string> tokens;
@@ -458,13 +499,17 @@ void builder::add_host_section(int32_t subsections)
 {
 
 	if (ADC_HS_BAD & subsections) {
-		std::cerr << "bad arg to add_host_section: " << subsections <<std::endl;
+		if (debug) {
+			std::cerr << "bad arg to add_host_section: " << subsections <<std::endl;
+		}
 		return;
 	}
 	struct utsname ubuf;
 	int uerr = uname(&ubuf);
 	if (uerr < 0) {
-		std::cerr << "uname failed in add_host_section" <<std::endl;
+		if (debug) {
+			std::cerr << "uname failed in add_host_section" <<std::endl;
+		}
 		return;
 	}
 	boost::json::object jv = {
@@ -490,7 +535,7 @@ void builder::add_host_section(int32_t subsections)
 		if (midata["valid"] == 1) {
 			jv["mem_total"] = midata["MemTotal"];
 		} else {
-			update_meminfo();
+			update_meminfo(debug);
 			if (midata["valid"] == 1)
 				jv["mem_total"] = midata["MemTotal"];
 			else
@@ -502,12 +547,15 @@ void builder::add_host_section(int32_t subsections)
 		std::string lscpu = get_lscpu();
 		auto cv = boost::json::parse(lscpu, ec);
 		if (ec) {
-			std::cerr << "unable to parse ("<< ec <<") lscpu output: " << lscpu << std::endl;
+			if (debug) {
+				std::cerr << "unable to parse ("<< ec <<") lscpu output: " <<
+					lscpu << std::endl;
+			}
 		}
 		jv["cpu"] = cv;
 	}
 	if (subsections & ADC_HS_GPU) {
-		jv["gpu"] = get_gpu_data();
+		jv["gpu"] = get_gpu_data(debug);
 	}
 	if (subsections & ADC_HS_NUMA) {
 		jv["numa_hardware"] = get_numa_hardware();
@@ -522,11 +570,12 @@ void builder::add_host_section(int32_t subsections)
 void builder::add_app_data_section(std::shared_ptr< builder_api > app_data)
 {
 	auto app_data_derived = std::dynamic_pointer_cast<builder>(app_data);
-	d["app_data"] = app_data_derived->flatten();
+	boost::json::object no_details;
+	d["app_data"] = app_data_derived ? app_data_derived->flatten() : no_details;
 }
 
 void builder::add_memory_usage_section() {
-	update_meminfo();
+	update_meminfo(debug);
 	if (midata["valid"] == 0) {
 		boost::json::object jv;
 		d["memory_usage"] = jv;
@@ -553,7 +602,8 @@ void builder::add_memory_usage_section() {
 void builder::add_model_data_section(std::shared_ptr< builder_api > model_data)
 {
 	auto model_data_derived = std::dynamic_pointer_cast<builder>(model_data);
-	d["model_data"] = model_data_derived->flatten();
+	boost::json::object no_details;
+	d["model_data"] = model_data_derived ? model_data_derived->flatten() : no_details;
 }
 
 // auto-populate code section with os-derived info at time of call,
@@ -569,13 +619,15 @@ void builder::add_code_section(std::string tag, std::shared_ptr< builder_api > v
 	std::vector< std::string> libs = get_libs(fullpath);
 	auto code_details_derived = std::dynamic_pointer_cast<builder>(code_details);
 	auto version_derived = std::dynamic_pointer_cast<builder>(version);
+	boost::json::object no_details;
 	boost::json::value jv = {
 		{"name", tag },
 		{"program", basename},
 		{"path", fullpath},
-		{"version", version_derived->d},
+		{"version", version_derived ?  version_derived->d : no_details},
 		{"libs", boost::json::value_from(libs) },
-		{"details", code_details_derived->flatten()}
+		{"details", code_details_derived ? 
+			code_details_derived->flatten() : no_details}
 	};
 	d["code"] = jv;
 }
@@ -584,28 +636,48 @@ void builder::add_code_section(std::string tag, std::shared_ptr< builder_api > v
 void builder::add_code_configuration_section(std::shared_ptr< builder_api > build_details)
 {
 	auto build_details_derived = std::dynamic_pointer_cast<builder>(build_details);
-	d["code_configuration"] = build_details_derived->flatten();
+	if (build_details_derived) {
+		d["code_configuration"] = build_details_derived->flatten();
+	} else {
+		boost::json::object no_details;
+		d["code_configuration"] = no_details;
+	}
 }
 
 // populate exit_data section
 void builder::add_exit_data_section(int return_code, std::string status, std::shared_ptr< builder_api > status_details)
 {
 	auto status_details_derived = std::dynamic_pointer_cast<builder>(status_details);
-	boost::json::value jv = {
-		{ "return_code", std::to_string(return_code)},
-		{ "status", status},
-		{ "details", status_details_derived->flatten()}
-	};
-	d["exit_data"] = jv;
+	if (status_details && status_details_derived) {
+		boost::json::value jv = {
+			{ "return_code", std::to_string(return_code)},
+			{ "status", status},
+			{ "details", status_details_derived->flatten()}
+		};
+		d["exit_data"] = jv;
+	} else {
+		boost::json::object no_details;
+		boost::json::value jv = {
+			{ "return_code", std::to_string(return_code)},
+			{ "status", status},
+			{ "details", no_details }
+		};
+		d["exit_data"] = jv;
+	}
 }
 
 
 void builder::add_section(std::string_view name, std::shared_ptr< builder_api > section)
 {
-
+	if (!section) {
+		return;
+	}
 	auto nk = kind(name);
 	if (nk == k_none) {
 		auto section_derived = std::dynamic_pointer_cast<builder>(section);
+		if (!section_derived) {
+			return;
+		}
 		sections[std::string(name)] = std::move(section_derived);
 	}
 }
@@ -616,13 +688,14 @@ std::shared_ptr< builder_api > builder::get_section(std::string_view name)
 	if (nk == k_section)
 		return sections[std::string(name)];
 	// should we throw here instead? probably not, for optional sections
-	return std::shared_ptr< builder_api >(NULL);
+	return std::shared_ptr< builder_api >(nullptr);
 }
 
 std::vector< std::string > builder::get_section_names()
 {
 	std::vector< std::string > result;
-	for (auto const& element : sections) {
+	result.reserve(sections.size());
+	for (const auto& element : sections) {
 		result.push_back(element.first);
 	}
 	return result;
@@ -1074,15 +1147,47 @@ static void get_array(field& f, scalar_type st, boost::json::value *v)
 	}
 }
 
-const field builder::get_value(std::string_view name)
+const field builder::get_value(std::string_view path_full)
 {
-	field f = { k_none, cp_none, NULL, 0, "", variant() };
-	f.kt = kind(name);
-	if (f.kt != k_value)
+	// hunt up value by following the path, independent of
+	// section vs json and typed-tuple vs not.
+	field f = { k_none, cp_none, nullptr, 0, "", variant() };
+	auto path = strip(path_full, '/');
+	key_type kt;
+	// recurse anything which is a leading section.
+    	auto pos = path.find("/");
+	std::string_view name;
+	if (pos == std::string::npos) {
+		name = path;
+	} else {
+        	name = std::string_view(path.begin(), pos);
+	}
+	kt = kind(name);
+	const boost::json::value jv = d;
+	const boost::json::value * jit;
+	boost::system::error_code ec;
+	auto child = path.substr(pos);
+	switch (kt) {
+	case k_none:
 		return f;
-	auto jit = d[name]; // see also at() and at_pointer()
-	if (jit.kind() == boost::json::kind::object) {
-		auto obj = jit.as_object();
+	case k_section:
+		return sections[std::string(name)]->get_value(child);
+	case k_value:
+		jit = d[name].find_pointer(child, ec);
+		if (!jit) {
+			if (debug) {
+				std::cerr << "get_value json missing: " << child << ": " << ec.message() << std::endl;
+			}
+			return f;
+		} else {
+			if (debug) {
+				std::cerr << "get_value found: " << child << ": " << *jit << std::endl;
+			}
+		}
+	}
+
+	if (jit->kind() == boost::json::kind::object) {
+		auto obj = jit->as_object();
 		auto v = obj.if_contains("value");
 		auto type_name_v = obj.if_contains("type");
 		std::string type_name;
@@ -1104,65 +1209,131 @@ const field builder::get_value(std::string_view name)
 			}
 		}
 	}
-	if (jit.kind() == boost::json::kind::array) {
+	if (jit->kind() == boost::json::kind::array) {
 		// untyped json arrays in get_value make no sense
 		return f;
 	}
-	if (jit.kind() == boost::json::kind::object) {
+	if (jit->kind() == boost::json::kind::object) {
 		// object in get_value make no sense
 		return f;
 	}
-	if (jit.kind() == boost::json::kind::string) {
+	if (jit->kind() == boost::json::kind::string) {
 		// bare strings default to cp_cstr
+		f.kt = kt;
 		f.st = cp_cstr;
-		f.vp = jit.if_string()->c_str();
-		f.count = jit.if_string()->size();
+		f.vp = jit->if_string()->c_str();
+		f.count = jit->if_string()->size();
 		return f;
 	}
-	if (jit.kind() == boost::json::kind::bool_) {
+	if (jit->kind() == boost::json::kind::bool_) {
+		f.kt = kt;
 		f.st = cp_bool;
-		f.vp = jit.if_bool();
+		f.vp = jit->if_bool();
 		f.count = 1;
 		return f;
 	}
-	if (jit.kind() == boost::json::kind::int64) {
+	if (jit->kind() == boost::json::kind::int64) {
+		f.kt = kt;
 		f.st = cp_int64;
-		f.vp = jit.if_int64();
+		f.vp = jit->if_int64();
 		f.count = 1;
 		return f;
 	}
-	if (jit.kind() == boost::json::kind::uint64) {
+	if (jit->kind() == boost::json::kind::uint64) {
+		f.kt = kt;
 		f.st = cp_uint64;
-		f.vp = jit.if_uint64();
+		f.vp = jit->if_uint64();
 		f.count = 1;
 		return f;
 	}
-	if (jit.kind() == boost::json::kind::double_) {
+	if (jit->kind() == boost::json::kind::double_) {
+		f.kt = kt;
 		f.st = cp_f64;
-		f.vp = jit.if_double();
+		f.vp = jit->if_double();
 		f.count = 1;
 		return f;
 	}
 	return f;
 }
 
-#if 0
-// fixme implement json-path lookup of boost.json items, maybe; builder::get_boost_json_value
-// accept paths of /a/b/c
-// split to vector walk down sections for prefix
-// of a, b, c
-// assemble remaining path and call at_pointer.
-void *builder::get_boost_json_value(std::string_view path)
-{
-	auto sit = sections.find(name);
-	if (sit != sections.end())
-		return k_section;
-	auto jit = d.find(name);
-	if (jit != d.end())
-		return k_value;
-	boost::json::value jv = d.at_pointer(path);
+const char *builder::get_value_string(std::string_view path) {
+	field f = get_value(path);
+	if (f.kt != k_value || f.container.size() != 0)
+		return nullptr;
+	switch (f.st) {
+        case cp_cstr:
+        case cp_json_str:
+        case cp_yaml_str:
+        case cp_xml_str:
+        case cp_json:
+        case cp_path:
+        case cp_number_str:
+		return static_cast<const char *>(f.vp);
+	default:
+		return nullptr;
+	}
 }
-#endif
+
+int64_t builder::get_value_int64(std::string_view path) {
+	field f = get_value(path);
+	if (f.kt != k_value || f.count != 1)
+		return INT64_MAX;
+	int64_t i = INT64_MAX;
+	switch (f.st) {
+	case cp_bool:
+		i = *static_cast<const bool *>(f.vp);
+		break;
+	case cp_char16:
+		[[fallthrough]];
+	case cp_char32:
+		i = *static_cast<const uint64_t *>(f.vp);
+		break;
+	case cp_char: 
+		[[fallthrough]];
+	case cp_int8:
+		[[fallthrough]];
+	case cp_int16:
+		[[fallthrough]];
+	case cp_int32:
+		[[fallthrough]];
+	case cp_int64:
+		i = *static_cast<const int64_t *>(f.vp);
+		break;
+	default:
+		break;
+	}
+	return i;
+}
+
+uint64_t builder::get_value_uint64(std::string_view path) {
+	field f = get_value(path);
+	if (f.kt != k_value || f.count != 1)
+		return UINT64_MAX;
+	uint64_t i = UINT64_MAX;
+	switch (f.st) {
+	case cp_bool:
+		i = *static_cast<const bool *>(f.vp);
+		break;
+	case cp_char16:
+		[[fallthrough]];
+	case cp_char32:
+		i = *static_cast<const uint64_t *>(f.vp);
+		break;
+	case cp_uint8:
+		[[fallthrough]];
+	case cp_uint16:
+		[[fallthrough]];
+	case cp_uint32:
+		i = *static_cast<const int64_t *>(f.vp);
+		break;
+	case cp_uint64:
+		i = std::stoull(std::string(static_cast<const char *>(f.vp)));
+		break;
+	default:
+		break;
+	}
+	return i;
+}
 
 void builder::add_mpi_section(std::string_view name, void *mpi_comm_p, adc_mpi_field_flags bitflags)
 {
@@ -1481,6 +1652,7 @@ void builder::add_gitlab_ci_section()
 }
 
 void builder::add(std::string_view name, bool value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_bool)},
 		{"value", value}
@@ -1489,6 +1661,7 @@ void builder::add(std::string_view name, bool value) {
 }
 
 void builder::add(std::string_view name, char value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_char)},
 		{"value", value }
@@ -1497,6 +1670,7 @@ void builder::add(std::string_view name, char value) {
 }
 
 void builder::add(std::string_view name, char16_t value) {
+	if (badkey(name)) return;
 	uint64_t ivalue = value;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_char16)},
@@ -1506,6 +1680,7 @@ void builder::add(std::string_view name, char16_t value) {
 }
 
 void builder::add(std::string_view name, char32_t value) {
+	if (badkey(name)) return;
 	uint64_t ivalue = value;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_char32)},
@@ -1516,6 +1691,7 @@ void builder::add(std::string_view name, char32_t value) {
 
 // builder::add null-terminated string
 void builder::add(std::string_view name, char* value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_cstr)},
 		{"value", value}
@@ -1523,6 +1699,7 @@ void builder::add(std::string_view name, char* value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, const char* value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_cstr)},
 		{"value", value}
@@ -1530,6 +1707,7 @@ void builder::add(std::string_view name, const char* value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, std::string_view value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_cstr)},
 		{"value", value}
@@ -1537,6 +1715,7 @@ void builder::add(std::string_view name, std::string_view value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, std::string& value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_cstr)},
 		{"value", value}
@@ -1546,6 +1725,7 @@ void builder::add(std::string_view name, std::string& value) {
 
 // builder::add null-terminated string file path
 void builder::add_path(std::string_view name, char* value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_path)},
 		{"value", value}
@@ -1553,6 +1733,7 @@ void builder::add_path(std::string_view name, char* value) {
 	d[name] = jv;
 }
 void builder::add_path(std::string_view name, const char* value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_path)},
 		{"value", value}
@@ -1560,6 +1741,7 @@ void builder::add_path(std::string_view name, const char* value) {
 	d[name] = jv;
 }
 void builder::add_path(std::string_view name, std::string_view value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_path)},
 		{"value", value}
@@ -1567,6 +1749,7 @@ void builder::add_path(std::string_view name, std::string_view value) {
 	d[name] = jv;
 }
 void builder::add_path(std::string_view name, std::string& value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_path)},
 		{"value", value}
@@ -1576,6 +1759,7 @@ void builder::add_path(std::string_view name, std::string& value) {
 
 // builder::add string which is serialized json.
 void builder::add_json_string(std::string_view name, std::string_view value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_json_str)},
 		{"value", value}
@@ -1584,6 +1768,7 @@ void builder::add_json_string(std::string_view name, std::string_view value) {
 }
 
 void builder::add_yaml_string(std::string_view name, std::string_view value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_yaml_str)},
 		{"value", value}
@@ -1592,6 +1777,7 @@ void builder::add_yaml_string(std::string_view name, std::string_view value) {
 }
 
 void builder::add_xml_string(std::string_view name, std::string_view value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_xml_str)},
 		{"value", value}
@@ -1600,6 +1786,7 @@ void builder::add_xml_string(std::string_view name, std::string_view value) {
 }
 
 void builder::add_number_string(std::string_view name, std::string_view value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_number_str)},
 		{"value", value}
@@ -1609,6 +1796,7 @@ void builder::add_number_string(std::string_view name, std::string_view value) {
 
 #if ADC_BOOST_JSON_PUBLIC
 void builder::add(std::string_view name, boost::json::value value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_json)},
 		{"value", value}
@@ -1619,6 +1807,7 @@ void builder::add(std::string_view name, boost::json::value value) {
 
 
 void builder::add(std::string_view name, uint8_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_uint8)},
 		{"value", value}
@@ -1626,6 +1815,7 @@ void builder::add(std::string_view name, uint8_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, uint16_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_uint16)},
 		{"value", value}
@@ -1633,6 +1823,7 @@ void builder::add(std::string_view name, uint16_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, uint32_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_uint32)},
 		{"value", value}
@@ -1640,6 +1831,7 @@ void builder::add(std::string_view name, uint32_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, uint64_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_uint64)},
 		{"value", std::to_string(value)}
@@ -1647,6 +1839,7 @@ void builder::add(std::string_view name, uint64_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, int8_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_int8)},
 		{"value", value}
@@ -1654,6 +1847,7 @@ void builder::add(std::string_view name, int8_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, int16_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_int16)},
 		{"value", value}
@@ -1661,6 +1855,7 @@ void builder::add(std::string_view name, int16_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, int32_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_int32)},
 		{"value", value }
@@ -1668,6 +1863,7 @@ void builder::add(std::string_view name, int32_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, int64_t value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_int64)},
 		{"value", value}
@@ -1675,6 +1871,7 @@ void builder::add(std::string_view name, int64_t value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, float value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_f32)},
 		{"value", value }
@@ -1682,6 +1879,7 @@ void builder::add(std::string_view name, float value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, const std::complex<float>& value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_c_f32)},
 		{"value", { value.real(), value.imag() }}
@@ -1689,6 +1887,7 @@ void builder::add(std::string_view name, const std::complex<float>& value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, double value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_f64)},
 		{"value", value }
@@ -1696,6 +1895,7 @@ void builder::add(std::string_view name, double value) {
 	d[name] = jv;
 }
 void builder::add(std::string_view name, const std::complex<double>& value) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type" , adc::to_string(cp_c_f64)},
 		{"value", { value.real(), value.imag() }}
@@ -1705,6 +1905,7 @@ void builder::add(std::string_view name, const std::complex<double>& value) {
 
 
 void builder::add(std::string_view name, const struct timeval& tv) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type" , adc::to_string(cp_timeval)},
 		{"value", { (int64_t)tv.tv_sec, (int64_t)tv.tv_usec }}
@@ -1713,6 +1914,7 @@ void builder::add(std::string_view name, const struct timeval& tv) {
 }
 
 void builder::add(std::string_view name, const struct timespec& ts) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type" , adc::to_string(cp_timespec)},
 		{"value", { (int64_t)ts.tv_sec, (int64_t)ts.tv_nsec }}
@@ -1721,6 +1923,7 @@ void builder::add(std::string_view name, const struct timespec& ts) {
 }
 
 void builder::add_epoch(std::string_view name, int64_t epoch) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", adc::to_string(cp_epoch)},
 		{"value", epoch }
@@ -1731,6 +1934,7 @@ void builder::add_epoch(std::string_view name, int64_t epoch) {
 
 void builder::add_from_pointer_type(std::string_view name, void* p, enum scalar_type t)
 {
+	if (badkey(name)) return;
 	switch (t) {
 	case cp_bool:
 		{
@@ -1952,6 +2156,7 @@ void builder::add_from_pointer_type(std::string_view name, void* p, enum scalar_
 }
 
 void builder::add_array(std::string_view name, bool value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_bool)},
@@ -1962,6 +2167,7 @@ void builder::add_array(std::string_view name, bool value[], size_t len, std::st
 }
 
 void builder::add_array(std::string_view name, const char *value, size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_char)},
@@ -1972,6 +2178,7 @@ void builder::add_array(std::string_view name, const char *value, size_t len, st
 }
 
 void builder::add_array(std::string_view name, char16_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_char16)},
@@ -1982,6 +2189,7 @@ void builder::add_array(std::string_view name, char16_t value[], size_t len, std
 }
 
 void builder::add_array(std::string_view name, char32_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_char32)},
@@ -1992,6 +2200,7 @@ void builder::add_array(std::string_view name, char32_t value[], size_t len, std
 }
 
 void builder::add_array(std::string_view name, uint8_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_uint8)},
@@ -2001,6 +2210,7 @@ void builder::add_array(std::string_view name, uint8_t value[], size_t len, std:
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, uint16_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_uint16)},
@@ -2010,6 +2220,7 @@ void builder::add_array(std::string_view name, uint16_t value[], size_t len, std
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, uint32_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_uint32)},
@@ -2019,6 +2230,7 @@ void builder::add_array(std::string_view name, uint32_t value[], size_t len, std
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, uint64_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	std::vector<std::string> sv(len);
 	for (size_t i = 0; i < len; i++)
 		sv[i] = std::to_string(value[i]);
@@ -2031,6 +2243,7 @@ void builder::add_array(std::string_view name, uint64_t value[], size_t len, std
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, int8_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_int8)},
@@ -2040,6 +2253,7 @@ void builder::add_array(std::string_view name, int8_t value[], size_t len, std::
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, int16_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_int16)},
@@ -2049,6 +2263,7 @@ void builder::add_array(std::string_view name, int16_t value[], size_t len, std:
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, int32_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_int32)},
@@ -2058,6 +2273,7 @@ void builder::add_array(std::string_view name, int32_t value[], size_t len, std:
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, int64_t value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_int64)},
@@ -2067,6 +2283,7 @@ void builder::add_array(std::string_view name, int64_t value[], size_t len, std:
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, float value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_f32)},
@@ -2077,6 +2294,7 @@ void builder::add_array(std::string_view name, float value[], size_t len, std::s
 }
 #if 0
 void builder::add_array(std::string_view name, const std::complex<float> value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_c_f32)},
@@ -2087,6 +2305,7 @@ void builder::add_array(std::string_view name, const std::complex<float> value[]
 }
 #endif
 void builder::add_array(std::string_view name, double value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_f64)},
@@ -2097,6 +2316,7 @@ void builder::add_array(std::string_view name, double value[], size_t len, std::
 }
 #if 0
 void builder::add_array(std::string_view name, const std::complex<double> value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type" , "array_" + adc::to_string(cp_c_f64)},
@@ -2108,6 +2328,7 @@ void builder::add_array(std::string_view name, const std::complex<double> value[
 #endif
 
 void builder::add_array(std::string_view name, char* value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
@@ -2117,6 +2338,7 @@ void builder::add_array(std::string_view name, char* value[], size_t len, std::s
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, const char* value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
@@ -2126,6 +2348,7 @@ void builder::add_array(std::string_view name, const char* value[], size_t len, 
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, std::string value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
@@ -2135,6 +2358,7 @@ void builder::add_array(std::string_view name, std::string value[], size_t len, 
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, const std::string value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
@@ -2144,6 +2368,7 @@ void builder::add_array(std::string_view name, const std::string value[], size_t
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, const std::vector<std::string> value, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
 		{"container_type", c},
@@ -2152,6 +2377,7 @@ void builder::add_array(std::string_view name, const std::vector<std::string> va
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, const std::set<std::string> value, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
 		{"container_type", c},
@@ -2160,6 +2386,7 @@ void builder::add_array(std::string_view name, const std::set<std::string> value
 	d[name] = jv;
 }
 void builder::add_array(std::string_view name, const std::list<std::string> value, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_cstr)},
 		{"container_type", c},
@@ -2169,6 +2396,7 @@ void builder::add_array(std::string_view name, const std::list<std::string> valu
 }
 // Array of strings which are serialized json.
 void builder::add_array_json_string(std::string_view name, const std::string value[], size_t len, std::string_view c) {
+	if (badkey(name)) return;
 	boost::json::array av(value, value+len);
 	boost::json::value jv = {
 		{"type", "array_" + adc::to_string(cp_json_str)},

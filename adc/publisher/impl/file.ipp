@@ -11,10 +11,8 @@
 
 namespace adc {
 
-using std::cout;
-
-typedef std::string string;
-typedef std::string_view string_view;
+using std::string;
+using std::string_view;
 
 
 /*! \brief File output publisher_api implementation.
@@ -162,7 +160,7 @@ public:
 			return ec.value();
 		}
 		string fpath = fdir + "/" + fname;
-		// open dump file; messages are null separated, not endl separated, as content may include \n.
+		// open dump file; messages are <json> tag separated, not endl separated, as content may include \n.
 		out.open(fpath, std::ofstream::out |
        			(fappend ? std::ofstream::app : std::ofstream::trunc));
 		if (out.good()) {

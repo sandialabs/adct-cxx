@@ -1,0 +1,23 @@
+#!/bin/bash
+# This input is normally used as the argument to sbatch job submission with slurm
+# requires:
+# - DEFAULT_ACCOUNT defined or -A argument given to sbatch
+# - ADC_PREFIX defined pointing to an adc installation
+#SBATCH --partition=short,batch
+#SBATCH --license=gpfs
+#SBATCH --time=00:02:00
+#S BATCH --account=$DEFAULT_ACCOUNT
+#SBATCH -N 2
+#SBATCH -n 4
+#SBATCH --output %j-%t-%s-%t.out
+
+#check the cmake with mpi build
+
+if test -f ./test-env-publishers; then
+	. ./test-env-publishers
+else
+	echo need to be in source adct-cxx/examples
+	exit 1
+fi
+export OMPI_MCA_smsc="^knem"
+mpirun -N 2 -n 4 ../cbuild.mpi/bin/adc.hello.world.mpi

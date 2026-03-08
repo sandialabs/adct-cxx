@@ -77,6 +77,7 @@ void factory::init()
 		// init list of uninstantiated plugin 
 		names.insert( ADC_PUBLISHER_NONE_NAME );
 		names.insert( ADC_PUBLISHER_FILE_NAME );
+		names.insert( ADC_PUBLISHER_MULTIFILE_NAME );
 		names.insert( ADC_PUBLISHER_STDOUT_NAME );
 		names.insert( ADC_PUBLISHER_SYSLOG_NAME );
 		names.insert( ADC_PUBLISHER_CURL_NAME );
@@ -102,6 +103,13 @@ void factory::init()
 #endif
 
 	}
+	const char *env = getenv("ADC_MULTI_PUBLISHER_DEBUG");
+	if (env && !strcmp(env,"1") ) {
+		debug = 1;
+	} else {
+		debug = 0;
+	}
+
 }
 
 std::shared_ptr<multi_publisher_api> factory::get_multi_publisher()
@@ -110,32 +118,56 @@ std::shared_ptr<multi_publisher_api> factory::get_multi_publisher()
 	return p;
 }
 
-std::shared_ptr<multi_publisher_api> factory::get_multi_publisher(std::vector<std::string>& namelist)
+std::shared_ptr<multi_publisher_api> factory::get_multi_publisher_from_env(const std::string& namelist)
+{
+	std::shared_ptr<multi_publisher_api> mp(new multi_publisher);
+	const char *env;
+	if (!namelist.size()) {
+		env = getenv("ADC_MULTI_PUBLISHER_NAMES");
+	} else {
+		env = getenv(namelist.c_str());
+	}
+	if (env) {
+		auto enames = split_string(std::string(env), ':');
+		return get_multi_publisher_from_env(enames);
+	}
+	return mp;
+}
+
+std::shared_ptr<multi_publisher_api> factory::get_multi_publisher_from_env(std::vector<std::string>& namelist)
 {
 
 	std::shared_ptr<multi_publisher_api> mp(new multi_publisher);
-	const std::map< std::string, std::string > m;
 	if (namelist.size() != 0) {
+		const std::map< std::string, std::string > m;
 		for (auto n : namelist) {
 			std::shared_ptr<publisher_api> p = get_publisher(n);
 			if (p) {
-				int ec = p->config(m);
-				if (!ec) {
-					mp->add(p);
+				if (debug) {
+					std::cout << "multi_publisher: publisher"
+						" found named: " << n << std::endl;
 				}
-			}
-		}
-	} else {
-		const char *env = getenv("ADC_MULTI_PUBLISHER_NAMES");
-		if (env) {
-			auto enames = split_string(std::string(env), ':');
-			for (auto n : enames) {
-				std::shared_ptr<publisher_api> p = get_publisher(n);
-				if (p) {
-					int ec = p->config(m);
-					if (!ec) {
-						mp->add(p);
+				int ec = p->config(m);
+				if (ec) {
+					if (debug) {
+						std::cout << "multi_publisher: config"
+							" failed for: " << n << std::endl;
 					}
+					continue;
+				}
+				int ei = p->initialize();
+				if (ei) {
+					if (debug) {
+						std::cout << "multi_publisher: initialize"
+							" failed for: " << n << std::endl;
+					}
+					continue;
+				}
+				mp->add(p);
+			} else {
+				if (debug) {
+					std::cout << "multi_publisher: no publisher"
+						" found named: " << n << std::endl;
 				}
 			}
 		}
