@@ -16,11 +16,12 @@ git clone https://github.com/sandialabs/adct-cxx.git
 - Make sure that boost c++ headers are installed so that boost.json is available.
 The details of this vary by platform.
 Boost 1.85 is known to work.
-Boost is only required to build the library, not to use it.
+Boost is only required to build the library, not to call it.
 
 - Basic build with cmake and a c++17 compiler
 
-GCC 12 and later are known to be adequately c++17 compliant.
+GCC 14 and later with a similarly modern libstdc++ are known to be
+adequately c++17 compliant.
 
 Scripts providing example invocations of cmake come with adct-cxx.
 The simplest is adct-cxx/build.nompi.cmake. It will require local
@@ -36,7 +37,8 @@ all lines in which 'module' appears anywhere.
 
 - MPI build
 
-GCC 12 and later are known to be adequately c++17 compliant.
+GCC 14 and later with a similarly modern libstdc++ are known to be
+adequately c++17 compliant.
 
 Scripts providing example invocations of cmake come with adct-cxx.
 The MPI build example is adct-cxx/build.cmake. It will require local
