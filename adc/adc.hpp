@@ -53,8 +53,9 @@ Interface support for later C++ standards is anticipated, as standard support fo
 basic character and numerical types evolves.
 
 \section library Linking
-- Linking with -ladc-c++ provides a factory-based API without MPI dependencies.
-- Linking with -ladc-c++-mpi provides a factory-based API with MPI library dependencies.
+- Link with -ladc_cxx 
+To link adct-cxx with and without MPI dependencies, make two separate installations and
+build your code with one or the other.
 
 \section publishers Performance
 The data collected is published as the application runs, and is fully labeled with

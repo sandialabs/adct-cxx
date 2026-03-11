@@ -15,10 +15,10 @@ if test -z "$ADC_PREFIX"; then
 fi
 
 module purge
-module load aue/gcc/12.3.0
-module load aue/openmpi/4.1.6-gcc-12.3.0
-module load aue/boost/1.85.0-gcc-12.3.0-openmpi-4.1.6
-module unload aue/openmpi/4.1.6-gcc-12.3.0
+module load aue/gcc/14.2.0
+module load aue/openmpi/5.0.6-gcc-14.2.0
+module load aue/boost/1.88.0-gcc-14.2.0-openmpi-5.0.6
+module unload aue/openmpi/5.0.6-gcc-14.2.0
 # oddly, the unload leaves us with gcc 12 but no mpi affecting the boost headers used in adc
 mkdir -p cbuild.nompi
 cd cbuild.nompi
@@ -27,5 +27,8 @@ cmake -DBLT_SOURCE_DIR=$BLT_SRC \
 	-DENABLE_MPI=Off \
 	-DENABLE_DOC=On \
 	-DCMAKE_INSTALL_PREFIX=$ADC_PREFIX \
+	-DCFLAGS="-g" \
+	-DCMAKE_BUILD_TYPE=Debug \
+	-DENABLE_GTEST=Off \
        	..
 VERBOSE=1 make && make install
