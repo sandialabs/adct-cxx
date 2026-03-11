@@ -20,6 +20,7 @@ This libadc-cxx does or will soon:
 Development of comprehensive tutorial examples and feature tests is on-going.
 - The current HPC example is examples/mpiSimpleDemo.cpp
 - The primary coverage test is examples/demoBuilder.cpp.
+- The current multi_publisher, parallel example is examples/adcHelloWorldMPI.cpp
 
 Example build instructions are provided in scripts build.*:
 
