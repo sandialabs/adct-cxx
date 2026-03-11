@@ -129,9 +129,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8c754d5b28ffaa1ff36cf4be9392e305" id="r_a8c754d5b28ffaa1ff36cf4be9392e305"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#a8c754d5b28ffaa1ff36cf4be9392e305">get_section_names</a> ()=0</td></tr>
 <tr class="memdesc:a8c754d5b28ffaa1ff36cf4be9392e305"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the names of sections  <br /></td></tr>
 <tr class="separator:a8c754d5b28ffaa1ff36cf4be9392e305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a259ab6dbd9ad628c9634c3b00e3d877c" id="r_a259ab6dbd9ad628c9634c3b00e3d877c"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="structadc_1_1field.html">field</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#a259ab6dbd9ad628c9634c3b00e3d877c">get_value</a> (std::string_view field_name)=0</td></tr>
-<tr class="memdesc:a259ab6dbd9ad628c9634c3b00e3d877c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named field in the section.  <br /></td></tr>
-<tr class="separator:a259ab6dbd9ad628c9634c3b00e3d877c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a4589ffceabe8745b7e6093c9f9eaa6" id="r_a1a4589ffceabe8745b7e6093c9f9eaa6"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="structadc_1_1field.html">field</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#a1a4589ffceabe8745b7e6093c9f9eaa6">get_value</a> (std::string_view path)=0</td></tr>
+<tr class="memdesc:a1a4589ffceabe8745b7e6093c9f9eaa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named nested field in the builder.  <br /></td></tr>
+<tr class="separator:a1a4589ffceabe8745b7e6093c9f9eaa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38e9410ef96979cf71a996c7569b6146" id="r_a38e9410ef96979cf71a996c7569b6146"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#a38e9410ef96979cf71a996c7569b6146">get_value_string</a> (std::string_view path)=0</td></tr>
+<tr class="memdesc:a38e9410ef96979cf71a996c7569b6146"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named nested scalar string value.  <br /></td></tr>
+<tr class="separator:a38e9410ef96979cf71a996c7569b6146"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc01d498e42277df4754959b8c10d4d2" id="r_adc01d498e42277df4754959b8c10d4d2"><td class="memItemLeft" align="right" valign="top">virtual int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#adc01d498e42277df4754959b8c10d4d2">get_value_int64</a> (std::string_view path)=0</td></tr>
+<tr class="memdesc:adc01d498e42277df4754959b8c10d4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named scalar value that can be correctly cast as int64_t  <br /></td></tr>
+<tr class="separator:adc01d498e42277df4754959b8c10d4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153ec37a0bb14a935a44cb151fd478c1" id="r_a153ec37a0bb14a935a44cb151fd478c1"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#a153ec37a0bb14a935a44cb151fd478c1">get_value_uint64</a> (std::string_view path)=0</td></tr>
+<tr class="memdesc:a153ec37a0bb14a935a44cb151fd478c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named scalar value that can be correctly cast as int64_t  <br /></td></tr>
+<tr class="separator:a153ec37a0bb14a935a44cb151fd478c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0256f48d55324f381c7bf489dc808a40" id="r_a0256f48d55324f381c7bf489dc808a40"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder__api.html#a0256f48d55324f381c7bf489dc808a40">get_field_names</a> ()=0</td></tr>
 <tr class="memdesc:a0256f48d55324f381c7bf489dc808a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the names of non-section fields in the section  <br /></td></tr>
 <tr class="separator:a0256f48d55324f381c7bf489dc808a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -306,7 +315,7 @@ Public Member Functions</h2></td></tr>
 <p>To be stored in the ADC storage system, every message must be created from the factory and then initialized with at least the add_header_section function.</p>
 <p>Primitives, arrays, or strings from existing application control formats including xml, yaml, or json and common containers of strings are supported. There are no functions here to parse external formats (e.g. xml, yaml, json) and store them as adc-formatted trees; this would add undesirable dependencies (parsing libraries) and (in some cases) introduce data typing ambiguities. </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00136">136</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00140">140</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad08616dda5f521cd759358ab6983b4d7" name="ad08616dda5f521cd759358ab6983b4d7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad08616dda5f521cd759358ab6983b4d7">&#9670;&#160;</a></span>~builder_api()</h2>
@@ -331,7 +340,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00138">138</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00142">142</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -678,8 +687,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a259ab6dbd9ad628c9634c3b00e3d877c" name="a259ab6dbd9ad628c9634c3b00e3d877c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a259ab6dbd9ad628c9634c3b00e3d877c">&#9670;&#160;</a></span>get_value()</h2>
+<a id="a1a4589ffceabe8745b7e6093c9f9eaa6" name="a1a4589ffceabe8745b7e6093c9f9eaa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a4589ffceabe8745b7e6093c9f9eaa6">&#9670;&#160;</a></span>get_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -691,7 +700,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual const <a class="el" href="structadc_1_1field.html">field</a> adc::builder_api::get_value </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>field_name</em></td><td>)</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -702,10 +711,127 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>get the existing named field in the section. </p>
-<dl class="section return"><dt>Returns</dt><dd>the field description, with kt==k_none if not found. If the value has kt==k_section, call get_section instead. If the value was not set via this interface, k_none is returned </dd></dl>
+<p>get the existing named nested field in the builder. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the field description, with kt==k_none if not found. If the value was not set via this interface, k_none is returned If the returned value has kt==k_section, call get_section instead. </dd></dl>
 
-<p>Implemented in <a class="el" href="classadc_1_1builder.html#a8079cde93e4450ab83ab0b17eb00ab50">adc::builder</a>.</p>
+<p>Implemented in <a class="el" href="classadc_1_1builder.html#ab4c8aa49815204f1ab8fabe2207b7ed4">adc::builder</a>.</p>
+
+</div>
+</div>
+<a id="a38e9410ef96979cf71a996c7569b6146" name="a38e9410ef96979cf71a996c7569b6146"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38e9410ef96979cf71a996c7569b6146">&#9670;&#160;</a></span>get_value_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const char * adc::builder_api::get_value_string </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the existing named nested scalar string value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL if the path is not matched or is not a string of some sort. </dd></dl>
+
+<p>Implemented in <a class="el" href="classadc_1_1builder.html#a685ab2a7eb20bc6829d87221e5a3d84c">adc::builder</a>.</p>
+
+</div>
+</div>
+<a id="adc01d498e42277df4754959b8c10d4d2" name="adc01d498e42277df4754959b8c10d4d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc01d498e42277df4754959b8c10d4d2">&#9670;&#160;</a></span>get_value_int64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int64_t adc::builder_api::get_value_int64 </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the existing named scalar value that can be correctly cast as int64_t </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>INT64_MAX if field_name is for data which is not compatible with int64_t. </dd></dl>
+
+<p>Implemented in <a class="el" href="classadc_1_1builder.html#abd82e2acb0572fcc418cb518a46f3b96">adc::builder</a>.</p>
+
+</div>
+</div>
+<a id="a153ec37a0bb14a935a44cb151fd478c1" name="a153ec37a0bb14a935a44cb151fd478c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a153ec37a0bb14a935a44cb151fd478c1">&#9670;&#160;</a></span>get_value_uint64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint64_t adc::builder_api::get_value_uint64 </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the existing named scalar value that can be correctly cast as int64_t </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>UINT64_MAX if field_name is for data which is not compatible with uint64_t. </dd></dl>
+
+<p>Implemented in <a class="el" href="classadc_1_1builder.html#ab1e7f1381303f7cea2dca78a38a5cd94">adc::builder</a>.</p>
 
 </div>
 </div>

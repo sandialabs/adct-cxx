@@ -7,5 +7,6 @@ var searchData=
   ['split_5fstring_4',['split_string',['../namespaceadc.html#ac1c1fe47ed0394349cac32da303fefb9',1,'adc']]],
   ['start_5fpublisher_5',['start_publisher',['../mpiSimpleDemo_8cpp.html#a2add98a9f2a88bb525b23e00c8f6a931',1,'mpiSimpleDemo.cpp']]],
   ['stdout_5fplugin_6',['stdout_plugin',['../classadc_1_1stdout__plugin.html#ab5867a59ba7923170527d139416fd907',1,'adc::stdout_plugin']]],
-  ['syslog_5fplugin_7',['syslog_plugin',['../classadc_1_1syslog__plugin.html#ab9c916d3eeecc854b5ba85480b2e8a9d',1,'adc::syslog_plugin']]]
+  ['strip_7',['strip',['../namespaceadc.html#a1394391673c47e9db4be6389ee569812',1,'adc']]],
+  ['syslog_5fplugin_8',['syslog_plugin',['../classadc_1_1syslog__plugin.html#ab9c916d3eeecc854b5ba85480b2e8a9d',1,'adc::syslog_plugin']]]
 ];

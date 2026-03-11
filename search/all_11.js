@@ -18,7 +18,8 @@ var searchData=
   ['stdout_5fplugin_15',['stdout_plugin',['../classadc_1_1stdout__plugin.html#ab5867a59ba7923170527d139416fd907',1,'adc::stdout_plugin::stdout_plugin()'],['../classadc_1_1stdout__plugin.html',1,'adc::stdout_plugin']]],
   ['string_16',['string',['../namespaceadc.html#ac9aa7b4b49e6859169c659b2496a9f80',1,'adc']]],
   ['string_5fview_17',['string_view',['../namespaceadc.html#a2acef0db014860808c166524947cb331',1,'adc']]],
-  ['syslog_2eipp_18',['syslog.ipp',['../syslog_8ipp.html',1,'']]],
-  ['syslog_5fnames_19',['SYSLOG_NAMES',['../syslog_8ipp.html#ac8660f6e6aafab0d2bb2bba1462675ea',1,'syslog.ipp']]],
-  ['syslog_5fplugin_20',['syslog_plugin',['../classadc_1_1syslog__plugin.html#ab9c916d3eeecc854b5ba85480b2e8a9d',1,'adc::syslog_plugin::syslog_plugin()'],['../classadc_1_1syslog__plugin.html',1,'adc::syslog_plugin']]]
+  ['strip_18',['strip',['../namespaceadc.html#a1394391673c47e9db4be6389ee569812',1,'adc']]],
+  ['syslog_2eipp_19',['syslog.ipp',['../syslog_8ipp.html',1,'']]],
+  ['syslog_5fnames_20',['SYSLOG_NAMES',['../syslog_8ipp.html#ac8660f6e6aafab0d2bb2bba1462675ea',1,'syslog.ipp']]],
+  ['syslog_5fplugin_21',['syslog_plugin',['../classadc_1_1syslog__plugin.html#ab9c916d3eeecc854b5ba85480b2e8a9d',1,'adc::syslog_plugin::syslog_plugin()'],['../classadc_1_1syslog__plugin.html',1,'adc::syslog_plugin']]]
 ];

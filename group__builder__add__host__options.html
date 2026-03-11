@@ -139,7 +139,7 @@ Typedefs</h2></td></tr>
 <p>The host data section has a variety of optional subsections. The ADC_HS_* bit values desired are ORd (|) together. The data for subsections with identifier &gt;= 0x10 is expensive, constant, and should not be collected multiple times per program run.</p>
 <p>Dynamic meminfo usage is collected with add_memory_usage_section not the host section. </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00042">42</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00046">46</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -157,7 +157,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_BASE collects just the hostname via gethostname() </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00047">47</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00051">51</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -175,7 +175,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_OS collects other items from uname(). </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00050">50</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00054">54</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -193,7 +193,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_RAMSIZE collects MemTotal. </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00053">53</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00057">57</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -211,7 +211,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_ENV collects env vars listed in env("ADC_HOST_SECTION_ENV") which is :-separated. Example: ADC_HOST_SECTION_ENV="SNLCLUSTER:SNLNETWORK:SNLSITE:SNLSYSTEM:SNLOS". </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00057">57</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00061">61</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_CPU collects details from lscpu -J (requires lscpu installed) </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00060">60</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00064">64</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -247,7 +247,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_GPU collects gpu data available from lspci (requires lspci installed) </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00063">63</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00067">67</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -265,7 +265,7 @@ Typedefs</h2></td></tr>
 
 <p>ADC_HS_NUMA collects numa node, cpu, and per node memory from numactl -H (requires numactl installed) </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00066">66</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00070">70</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -283,7 +283,7 @@ Typedefs</h2></td></tr>
 
 <p>all ADC_HS_* optional data included </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00069">69</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00073">73</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>
@@ -301,7 +301,7 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 <p>OR-d ADC_HS_* bits </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00044">44</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8hpp_source.html#l00048">48</a> of file <a class="el" href="builder_8hpp_source.html">builder.hpp</a>.</p>
 
 </div>
 </div>

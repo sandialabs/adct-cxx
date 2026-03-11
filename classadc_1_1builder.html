@@ -90,9 +90,11 @@ Inheritance diagram for adc::builder:</div>
 <div class="dyncontent">
 <div class="center"><img src="classadc_1_1builder__inherit__graph.png" border="0" usemap="#aadc_1_1builder_inherit__map" alt="Inheritance graph"/></div>
 <map name="aadc_1_1builder_inherit__map" id="aadc_1_1builder_inherit__map">
-<area shape="rect" title="Implementation of builder_api with optional (compile&#45;time) support of MPI. If compiled without MPI,..." alt="" coords="19,79,117,104"/>
-<area shape="rect" href="classadc_1_1builder__api.html" title="The builder api is used to construct structured log (json) messages that follow naming conventions." alt="" coords="5,5,131,31"/>
-<area shape="poly" title=" " alt="" coords="71,44,71,79,65,79,65,44"/>
+<area shape="rect" title="Implementation of builder_api with optional (compile&#45;time) support of MPI. If compiled without MPI,..." alt="" coords="104,93,203,119"/>
+<area shape="rect" href="classadc_1_1builder__api.html" title="The builder api is used to construct structured log (json) messages that follow naming conventions." alt="" coords="5,13,131,38"/>
+<area shape="poly" title=" " alt="" coords="93,45,142,91,139,95,89,49"/>
+<area shape="rect" title=" " alt="" coords="155,5,322,45"/>
+<area shape="poly" title=" " alt="" coords="210,57,168,95,164,91,206,53"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -100,9 +102,11 @@ Collaboration diagram for adc::builder:</div>
 <div class="dyncontent">
 <div class="center"><img src="classadc_1_1builder__coll__graph.png" border="0" usemap="#aadc_1_1builder_coll__map" alt="Collaboration graph"/></div>
 <map name="aadc_1_1builder_coll__map" id="aadc_1_1builder_coll__map">
-<area shape="rect" title="Implementation of builder_api with optional (compile&#45;time) support of MPI. If compiled without MPI,..." alt="" coords="19,79,117,104"/>
-<area shape="rect" href="classadc_1_1builder__api.html" title="The builder api is used to construct structured log (json) messages that follow naming conventions." alt="" coords="5,5,131,31"/>
-<area shape="poly" title=" " alt="" coords="71,44,71,79,65,79,65,44"/>
+<area shape="rect" title="Implementation of builder_api with optional (compile&#45;time) support of MPI. If compiled without MPI,..." alt="" coords="104,93,203,119"/>
+<area shape="rect" href="classadc_1_1builder__api.html" title="The builder api is used to construct structured log (json) messages that follow naming conventions." alt="" coords="5,13,131,38"/>
+<area shape="poly" title=" " alt="" coords="93,45,142,91,139,95,89,49"/>
+<area shape="rect" title=" " alt="" coords="155,5,322,45"/>
+<area shape="poly" title=" " alt="" coords="210,57,168,95,164,91,206,53"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -163,9 +167,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf2c4dbaff435a52e59b36641cd7ad18" id="r_aaf2c4dbaff435a52e59b36641cd7ad18"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#aaf2c4dbaff435a52e59b36641cd7ad18">get_field_names</a> ()</td></tr>
 <tr class="memdesc:aaf2c4dbaff435a52e59b36641cd7ad18"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the names of non-section fields in the section  <br /></td></tr>
 <tr class="separator:aaf2c4dbaff435a52e59b36641cd7ad18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8079cde93e4450ab83ab0b17eb00ab50" id="r_a8079cde93e4450ab83ab0b17eb00ab50"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structadc_1_1field.html">field</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#a8079cde93e4450ab83ab0b17eb00ab50">get_value</a> (std::string_view name)</td></tr>
-<tr class="memdesc:a8079cde93e4450ab83ab0b17eb00ab50"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named field in the section.  <br /></td></tr>
-<tr class="separator:a8079cde93e4450ab83ab0b17eb00ab50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4c8aa49815204f1ab8fabe2207b7ed4" id="r_ab4c8aa49815204f1ab8fabe2207b7ed4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structadc_1_1field.html">field</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#ab4c8aa49815204f1ab8fabe2207b7ed4">get_value</a> (std::string_view path)</td></tr>
+<tr class="memdesc:ab4c8aa49815204f1ab8fabe2207b7ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named nested field in the builder.  <br /></td></tr>
+<tr class="separator:ab4c8aa49815204f1ab8fabe2207b7ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a685ab2a7eb20bc6829d87221e5a3d84c" id="r_a685ab2a7eb20bc6829d87221e5a3d84c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#a685ab2a7eb20bc6829d87221e5a3d84c">get_value_string</a> (std::string_view path)</td></tr>
+<tr class="memdesc:a685ab2a7eb20bc6829d87221e5a3d84c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named nested scalar string value.  <br /></td></tr>
+<tr class="separator:a685ab2a7eb20bc6829d87221e5a3d84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd82e2acb0572fcc418cb518a46f3b96" id="r_abd82e2acb0572fcc418cb518a46f3b96"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#abd82e2acb0572fcc418cb518a46f3b96">get_value_int64</a> (std::string_view path)</td></tr>
+<tr class="memdesc:abd82e2acb0572fcc418cb518a46f3b96"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named scalar value that can be correctly cast as int64_t  <br /></td></tr>
+<tr class="separator:abd82e2acb0572fcc418cb518a46f3b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1e7f1381303f7cea2dca78a38a5cd94" id="r_ab1e7f1381303f7cea2dca78a38a5cd94"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#ab1e7f1381303f7cea2dca78a38a5cd94">get_value_uint64</a> (std::string_view path)</td></tr>
+<tr class="memdesc:ab1e7f1381303f7cea2dca78a38a5cd94"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the existing named scalar value that can be correctly cast as int64_t  <br /></td></tr>
+<tr class="separator:ab1e7f1381303f7cea2dca78a38a5cd94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a2a258b85348348e7ba28c7b0ad96b5" id="r_a5a2a258b85348348e7ba28c7b0ad96b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classadc_1_1builder.html#a5a2a258b85348348e7ba28c7b0ad96b5">add</a> (std::string_view name, bool value)</td></tr>
 <tr class="memdesc:a5a2a258b85348348e7ba28c7b0ad96b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">add a named boolean  <br /></td></tr>
 <tr class="separator:a5a2a258b85348348e7ba28c7b0ad96b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -317,7 +330,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of <a class="el" href="classadc_1_1builder__api.html" title="The builder api is used to construct structured log (json) messages that follow naming conventions.">builder_api</a> with optional (compile-time) support of MPI. If compiled without MPI, the mpi-related calls devolve to serial behavior. </p>
 
-<p class="definition">Definition at line <a class="el" href="impl_2builder_8hpp_source.html#l00032">32</a> of file <a class="el" href="impl_2builder_8hpp_source.html">builder.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="impl_2builder_8hpp_source.html#l00036">36</a> of file <a class="el" href="impl_2builder_8hpp_source.html">builder.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0bdfcd9219462bfea89bd34fe11e3c72" name="a0bdfcd9219462bfea89bd34fe11e3c72"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0bdfcd9219462bfea89bd34fe11e3c72">&#9670;&#160;</a></span>builder()</h2>
@@ -335,7 +348,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00383">383</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00423">423</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +398,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#aea5b390dea5ed492487503cf38cfaafa">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00599">599</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00670">670</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -417,7 +430,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a17c36a4298aa6ab2841ee073d5444da5">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00387">387</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00431">431</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -455,7 +468,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a3a0b50729a845dd6709424c178449130">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00453">453</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00498">498</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -488,7 +501,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ad720c063a7ac23102c464a422df5601f">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00518">518</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00570">570</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -520,7 +533,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af54b46de48ddcd7483b3d36b2900c128">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00549">549</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00602">602</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -568,7 +581,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a1e1d737f984b3da0fac67ad77fe2d128">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00557">557</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00611">611</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -601,7 +614,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af15ad27b473e5d2968cc248b7aba2649">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00580">580</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00636">636</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -650,7 +663,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a05261fe05fff32e284bd09c0a26f350e">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00587">587</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00648">648</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -682,7 +695,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#abf856e563e76abe5d8a731650338948e">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00524">524</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00577">577</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -730,7 +743,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a98a147469e49187281581a8e1c2cb39c">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01163">1163</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01338">1338</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -765,7 +778,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ac65c151bd9aad17924286a4af856bce2">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01375">1375</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01550">1550</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -799,7 +812,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a0156fd86eab80f58f9d03a2817bc1069">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01422">1422</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01597">1597</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -837,7 +850,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a4e86b2a3d52c1e06fcfbc91881b8fc12">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01341">1341</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01516">1516</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -869,7 +882,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a5fe6344576fda15bc51d6c4fbfff8e7d">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01347">1347</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01522">1522</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -915,7 +928,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a2f82bedb247b4eb9ab69a171152cdf91">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01452">1452</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01627">1627</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -948,7 +961,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ac7502a53241d088b22a5081800d08086">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00609">609</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00685">685</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -980,7 +993,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a8c754d5b28ffaa1ff36cf4be9392e305">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00618">618</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00694">694</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1012,12 +1025,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a0256f48d55324f381c7bf489dc808a40">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00627">627</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00704">704</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
-<a id="a8079cde93e4450ab83ab0b17eb00ab50" name="a8079cde93e4450ab83ab0b17eb00ab50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8079cde93e4450ab83ab0b17eb00ab50">&#9670;&#160;</a></span>get_value()</h2>
+<a id="ab4c8aa49815204f1ab8fabe2207b7ed4" name="ab4c8aa49815204f1ab8fabe2207b7ed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4c8aa49815204f1ab8fabe2207b7ed4">&#9670;&#160;</a></span>get_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1029,7 +1042,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">const <a class="el" href="structadc_1_1field.html">field</a> adc::builder::get_value </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>field_name</em></td><td>)</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1040,12 +1053,135 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>get the existing named field in the section. </p>
-<dl class="section return"><dt>Returns</dt><dd>the field description, with kt==k_none if not found. If the value has kt==k_section, call get_section instead. If the value was not set via this interface, k_none is returned </dd></dl>
+<p>get the existing named nested field in the builder. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the field description, with kt==k_none if not found. If the value was not set via this interface, k_none is returned If the returned value has kt==k_section, call get_section instead. </dd></dl>
 
-<p>Implements <a class="el" href="classadc_1_1builder__api.html#a259ab6dbd9ad628c9634c3b00e3d877c">adc::builder_api</a>.</p>
+<p>Implements <a class="el" href="classadc_1_1builder__api.html#a1a4589ffceabe8745b7e6093c9f9eaa6">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01073">1073</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01150">1150</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+
+</div>
+</div>
+<a id="a685ab2a7eb20bc6829d87221e5a3d84c" name="a685ab2a7eb20bc6829d87221e5a3d84c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a685ab2a7eb20bc6829d87221e5a3d84c">&#9670;&#160;</a></span>get_value_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * adc::builder::get_value_string </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the existing named nested scalar string value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL if the path is not matched or is not a string of some sort. </dd></dl>
+
+<p>Implements <a class="el" href="classadc_1_1builder__api.html#a38e9410ef96979cf71a996c7569b6146">adc::builder_api</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01259">1259</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+
+</div>
+</div>
+<a id="abd82e2acb0572fcc418cb518a46f3b96" name="abd82e2acb0572fcc418cb518a46f3b96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd82e2acb0572fcc418cb518a46f3b96">&#9670;&#160;</a></span>get_value_int64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t adc::builder::get_value_int64 </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the existing named scalar value that can be correctly cast as int64_t </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>INT64_MAX if field_name is for data which is not compatible with int64_t. </dd></dl>
+
+<p>Implements <a class="el" href="classadc_1_1builder__api.html#adc01d498e42277df4754959b8c10d4d2">adc::builder_api</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01277">1277</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+
+</div>
+</div>
+<a id="ab1e7f1381303f7cea2dca78a38a5cd94" name="ab1e7f1381303f7cea2dca78a38a5cd94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1e7f1381303f7cea2dca78a38a5cd94">&#9670;&#160;</a></span>get_value_uint64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t adc::builder::get_value_uint64 </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the existing named scalar value that can be correctly cast as int64_t </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>a simple json path such as /a/b/c which resolves to a value added via one of the add* functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>UINT64_MAX if field_name is for data which is not compatible with uint64_t. </dd></dl>
+
+<p>Implements <a class="el" href="classadc_1_1builder__api.html#a153ec37a0bb14a935a44cb151fd478c1">adc::builder_api</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01308">1308</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1087,7 +1223,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a92ccd6c52ad3d23f1e1d857c100928ff">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01479">1479</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01654">1654</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1129,7 +1265,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a25781f81dce0526f9ac2093d6ea03f71">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01487">1487</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01663">1663</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1171,7 +1307,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#aff6c73f623fd33675913e0a877dcffbe">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01495">1495</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01672">1672</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1213,7 +1349,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ac50dec666712cc5fe8e7be4ce3ea98f2">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01504">1504</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01682">1682</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1255,7 +1391,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a274ac79592b0382fde47adf1499ab85d">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01514">1514</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01693">1693</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1297,7 +1433,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#abe2c251ee3e7a91a30ac38b280693beb">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01521">1521</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01701">1701</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1339,7 +1475,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a74c8edb17df8f9607ed0e59692b5a0ec">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01535">1535</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01717">1717</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1381,7 +1517,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a4b76af30d4e6939991ede9ca2b189245">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01528">1528</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01709">1709</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1423,7 +1559,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a408dfba634feee4ebe320517fa6a425c">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01544">1544</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01727">1727</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1465,7 +1601,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a364bd2ffb54dcafa37e791f318f789b6">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01551">1551</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01735">1735</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1507,7 +1643,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ae3c60ecdb5340b2db45c0a4a46c3c922">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01565">1565</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01751">1751</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1549,7 +1685,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a47c523524d4e3622c7dac84dc6981dca">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01558">1558</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01743">1743</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1591,7 +1727,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af2621054b14346617287822e66dc7482">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01574">1574</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01761">1761</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1633,7 +1769,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#aa598107efcb4b10af1dee1c648915f52">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01582">1582</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01770">1770</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1675,7 +1811,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a45314395fe9b3f94b65008b4e24516b1">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01590">1590</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01779">1779</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1717,7 +1853,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ae951cde78d3f0bd05b3e4f4f31c67e31">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01598">1598</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01788">1788</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1759,7 +1895,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ae791ae95763e961046c71ddb682cb3c5">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01617">1617</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01809">1809</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1801,7 +1937,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af1f354e3ede82ccc4e73fd581551ac1c">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01624">1624</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01817">1817</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1843,7 +1979,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a8a13528b19dc246f4a04742452587a8f">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01631">1631</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01825">1825</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1885,7 +2021,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a1d0e0d319bae3a53c36b26a283f077ac">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01638">1638</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01833">1833</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1927,7 +2063,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a28879e90b4520c6a9faf8063811a14c1">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01645">1645</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01841">1841</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -1969,7 +2105,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af5d428b6f46a61caf17c9c509d958486">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01652">1652</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01849">1849</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2011,7 +2147,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ad4ff0ecffc324c3ef962e7bb61a233de">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01659">1659</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01857">1857</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2053,7 +2189,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af734cbf16c748841d0939fd679af5d5e">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01666">1666</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01865">1865</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2095,7 +2231,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a64036db9a06707ee3f0390a846457b59">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01673">1673</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01873">1873</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2137,7 +2273,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ad0e99aa5bbd6e4ab65f1b5de5e4bba04">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01680">1680</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01881">1881</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2179,7 +2315,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ae179ae0a948665e5425825a4f25f227a">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01687">1687</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01889">1889</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2221,7 +2357,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#adca06f43adc7b3ed2ffbbc59ec13c60b">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01694">1694</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01897">1897</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2263,7 +2399,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ab8f3b08107061fa16dcdeac580e3f013">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01703">1703</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01907">1907</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2305,7 +2441,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af3b6d7417b770fc038c2b7bf003f788b">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01711">1711</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01916">1916</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2347,7 +2483,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a6eb8c54580e112acb41f9524d5c0f07d">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01719">1719</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01925">1925</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2395,7 +2531,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a4f4af952c1b3e8be7c4000d3ea390816">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01728">1728</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01935">1935</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2449,7 +2585,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a7328a6ae4fffd4c9e6c0c1679657a492">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01950">1950</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02158">2158</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2503,7 +2639,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a8169f1db2514cad70b4aa65aaa0e55de">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01960">1960</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02169">2169</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2555,7 +2691,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a0998233fda681485b1aed421c226f692">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01970">1970</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02180">2180</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2607,7 +2743,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a61fde394817db3b1d50390f4050f73d2">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01980">1980</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02191">2191</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2659,7 +2795,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a29999b8db4ac16acf45321b199cb2470">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01990">1990</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02202">2202</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2711,7 +2847,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a983833249144b6070fe5fa19ca91d050">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l01999">1999</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02212">2212</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2763,7 +2899,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a7e50dbd490e72e2ae621bd06473944b8">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02008">2008</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02222">2222</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2815,7 +2951,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a80b3c5e3961af2c2967b39b96e9d9305">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02017">2017</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02232">2232</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2867,7 +3003,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#abc8b5278769f7ba86f5c32ecd2025762">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02029">2029</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02245">2245</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2919,7 +3055,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a29a512b123a44b35f98ac4035a99227c">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02038">2038</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02255">2255</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -2971,7 +3107,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a54f28e2123bb166a07086bde16361343">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02047">2047</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02265">2265</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3023,7 +3159,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#af900c595663dac823c0f1c2862a8c485">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02056">2056</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02275">2275</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3075,7 +3211,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ab57d7b236c13e189f2d66f9fa1bafb15">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02065">2065</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02285">2285</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3127,7 +3263,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a1d9dffb03b0936f7d1de141afbda924b">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02085">2085</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02307">2307</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3181,7 +3317,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a2c55045e010d52e99b5a009e15484a3e">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02106">2106</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02330">2330</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3233,7 +3369,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a153fde695d3fcf4fba6dd6f9d8adf92e">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02115">2115</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02340">2340</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3285,7 +3421,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a87fb917bf012712ac9a85180a41828d9">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02124">2124</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02350">2350</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3381,7 +3517,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a00c2d801012d43193b1a8bd4c52fb3c1">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02142">2142</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02370">2370</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3427,7 +3563,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a053df15c14fcad691b8d1e91cc05b034">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02150">2150</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02379">2379</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3473,7 +3609,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a00942ee94a1b95380c50c2203e5ff004">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02158">2158</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02388">2388</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3527,7 +3663,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#a9e6a44214b42acfaadaf3b4ae76de1b1">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02167">2167</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02398">2398</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -3558,7 +3694,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classadc_1_1builder__api.html#ae26c5509d492172e9d908fc9ecba598b">adc::builder_api</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02190">2190</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l02422">2422</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>

@@ -199,7 +199,9 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__API.html#ggaeb731252f37f7222324c68742a0c9048a40f3871202ad1763ed4dc0e9e2a4a99c">adc::cp_timespec</a>
 , <a class="el" href="group__API.html#ggaeb731252f37f7222324c68742a0c9048a4da55e48ccb603d1cea8109c9e2cdc90">adc::cp_timeval</a>
 , <a class="el" href="group__API.html#ggaeb731252f37f7222324c68742a0c9048a1eadf254d087059aef7f4db11e88c018">adc::cp_epoch</a>
-, <a class="el" href="group__API.html#ggaeb731252f37f7222324c68742a0c9048af20fbc55c4341098236cd500f2f6f655">adc::cp_last</a>
+, <a class="el" href="group__API.html#ggaeb731252f37f7222324c68742a0c9048a6255646aef664d0932cdcf18145b933e">adc::cp_char8</a>
+, <br />
+&#160;&#160;<a class="el" href="group__API.html#ggaeb731252f37f7222324c68742a0c9048af20fbc55c4341098236cd500f2f6f655">adc::cp_last</a>
 <br />
  }</td></tr>
 <tr class="memdesc:gaeb731252f37f7222324c68742a0c9048"><td class="mdescLeft">&#160;</td><td class="mdescRight">field types for scientific data encode/decode with json.  <a href="group__API.html#gaeb731252f37f7222324c68742a0c9048">More...</a><br /></td></tr>
@@ -224,8 +226,6 @@ Functions</h2></td></tr>
 <tr class="separator:gadd86d66a80c690301719393fefee10ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5aac2fc29164e1302623f4aff935dde9" id="r_ga5aac2fc29164e1302623f4aff935dde9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga5aac2fc29164e1302623f4aff935dde9">adc::format_timespec_utc_ns</a> (struct timespec &amp;ts)</td></tr>
 <tr class="separator:ga5aac2fc29164e1302623f4aff935dde9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae62b9f343990dd5df17edd8cfe827306" id="r_gae62b9f343990dd5df17edd8cfe827306"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#gae62b9f343990dd5df17edd8cfe827306">adc::consolidate_multifile_logs</a> (std::string_view dir, std::string_view match)</td></tr>
-<tr class="separator:gae62b9f343990dd5df17edd8cfe827306"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3584eed449168f9708ad36e963845447" id="r_ga3584eed449168f9708ad36e963845447"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga3584eed449168f9708ad36e963845447">adc::get_default_affinity</a> ()</td></tr>
 <tr class="separator:ga3584eed449168f9708ad36e963845447"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7acd85693c6eedbfd1874abd2faf1fda" id="r_ga7acd85693c6eedbfd1874abd2faf1fda"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga7acd85693c6eedbfd1874abd2faf1fda">adc::to_string</a> (<a class="el" href="group__API.html#gaeb731252f37f7222324c68742a0c9048">scalar_type</a> st)</td></tr>
@@ -246,6 +246,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga26770715839f7b680c2c65f3a8d24ce6" id="r_ga26770715839f7b680c2c65f3a8d24ce6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga26770715839f7b680c2c65f3a8d24ce6">adc::test_enum_strings</a> ()</td></tr>
 <tr class="memdesc:ga26770715839f7b680c2c65f3a8d24ce6"><td class="mdescLeft">&#160;</td><td class="mdescRight">return non-zero if to_string and enum scalar_type are inconsisent.  <br /></td></tr>
 <tr class="separator:ga26770715839f7b680c2c65f3a8d24ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5e768b4a91dd3ecd0fe2da354765f0f" id="r_gaa5e768b4a91dd3ecd0fe2da354765f0f"><td class="memItemLeft" align="right" valign="top">ADC_VISIBLE std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#gaa5e768b4a91dd3ecd0fe2da354765f0f">adc::get_multifile_log_path</a> (<a class="el" href="namespaceadc.html#a2acef0db014860808c166524947cb331">string_view</a> dir, <a class="el" href="namespaceadc.html#a2acef0db014860808c166524947cb331">string_view</a> wfid)</td></tr>
+<tr class="separator:gaa5e768b4a91dd3ecd0fe2da354765f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8d55ab996e7cece949d1af24156f477" id="r_gaf8d55ab996e7cece949d1af24156f477"><td class="memItemLeft" align="right" valign="top">ADC_VISIBLE std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#gaf8d55ab996e7cece949d1af24156f477">adc::consolidate_multifile_logs</a> (const std::string &amp;match, std::vector&lt; std::string &gt; &amp;old_paths, bool debug=false)</td></tr>
+<tr class="separator:gaf8d55ab996e7cece949d1af24156f477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39c7d8d21ae5c28e0bb3135c9303059d" id="r_ga39c7d8d21ae5c28e0bb3135c9303059d"><td class="memItemLeft" align="right" valign="top">ADC_VISIBLE std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga39c7d8d21ae5c28e0bb3135c9303059d">adc::validate_multifile_log</a> (<a class="el" href="namespaceadc.html#a2acef0db014860808c166524947cb331">string_view</a> filename, bool check_json, size_t &amp;record_count)</td></tr>
+<tr class="separator:ga39c7d8d21ae5c28e0bb3135c9303059d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -260,6 +266,8 @@ Variables</h2></td></tr>
 <tr class="memitem:ga98c16eab51924faa340d2b5c2aa37667" id="r_ga98c16eab51924faa340d2b5c2aa37667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structadc_1_1version.html">version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga98c16eab51924faa340d2b5c2aa37667">adc::enum_version</a> (&quot;1.0.0&quot;, {&quot;none&quot;})</td></tr>
 <tr class="memdesc:ga98c16eab51924faa340d2b5c2aa37667"><td class="mdescLeft">&#160;</td><td class="mdescRight">the version number of enum scalar_type and object_type  <br /></td></tr>
 <tr class="separator:ga98c16eab51924faa340d2b5c2aa37667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2eb8d601d057994370ce84a8dd5dbec5" id="r_ga2eb8d601d057994370ce84a8dd5dbec5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structadc_1_1version.html">version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__API.html#ga2eb8d601d057994370ce84a8dd5dbec5">adc::adc_utility_version</a> (&quot;1.0.0&quot;, {&quot;none&quot;})</td></tr>
+<tr class="separator:ga2eb8d601d057994370ce84a8dd5dbec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -277,7 +285,7 @@ Variables</h2></td></tr>
 
 <p>Set to 1 if 8/16 float types for gpus are supported. ADC_SUPPORT_GPU_FLOATS should be defined by build-time configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00032">32</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00036">36</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -295,7 +303,7 @@ Variables</h2></td></tr>
 
 <p>Set to 1 if 80 bit floats for cpus are supported. ADC_SUPPORT_EXTENDED_FLOATS should be defined by build-time configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00036">36</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00040">40</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -313,7 +321,7 @@ Variables</h2></td></tr>
 
 <p>Set to 1 if 128 bit floats for cpus are supported. ADC_SUPPORT_QUAD_FLOATS should be defined by build-time configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00040">40</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00044">44</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -331,7 +339,7 @@ Variables</h2></td></tr>
 
 <p>include boost::json support in the API ADC_BOOST_JSON_PUBLIC could be defined by build-time configuration. If it is, this library forces boost::json and other boost dependencies on the build of any application which uses it. </p>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00046">46</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00050">50</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -350,7 +358,7 @@ Variables</h2></td></tr>
 
 <p>name/plugin map. </p>
 
-<p class="definition">Definition at line <a class="el" href="publisher_8hpp_source.html#l00097">97</a> of file <a class="el" href="publisher_8hpp_source.html">publisher.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher_8hpp_source.html#l00101">101</a> of file <a class="el" href="publisher_8hpp_source.html">publisher.hpp</a>.</p>
 
 </div>
 </div>
@@ -368,7 +376,7 @@ Variables</h2></td></tr>
 
 <p>list of publishers </p>
 
-<p class="definition">Definition at line <a class="el" href="publisher_8hpp_source.html#l00100">100</a> of file <a class="el" href="publisher_8hpp_source.html">publisher.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher_8hpp_source.html#l00104">104</a> of file <a class="el" href="publisher_8hpp_source.html">publisher.hpp</a>.</p>
 
 </div>
 </div>
@@ -386,7 +394,7 @@ Variables</h2></td></tr>
 
 <p>named publisher </p>
 
-<p class="definition">Definition at line <a class="el" href="publisher_8hpp_source.html#l00103">103</a> of file <a class="el" href="publisher_8hpp_source.html">publisher.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher_8hpp_source.html#l00107">107</a> of file <a class="el" href="publisher_8hpp_source.html">publisher.hpp</a>.</p>
 
 </div>
 </div>
@@ -405,7 +413,7 @@ Variables</h2></td></tr>
 <p>variant for querying builder data. </p>
 <p>Any changes here must be reflected in the <a class="el" href="classadc_1_1var__string.html" title="return string for printing from variant v.">var_string</a> operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00153">153</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00159">159</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -494,10 +502,12 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaeb731252f37f7222324c68742a0c9048a1eadf254d087059aef7f4db11e88c018" name="ggaeb731252f37f7222324c68742a0c9048a1eadf254d087059aef7f4db11e88c018"></a>cp_epoch&#160;</td><td class="fielddoc"><p>time(NULL) seconds since the epoch (UNIX) as int64_t </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaeb731252f37f7222324c68742a0c9048a6255646aef664d0932cdcf18145b933e" name="ggaeb731252f37f7222324c68742a0c9048a6255646aef664d0932cdcf18145b933e"></a>cp_char8&#160;</td><td class="fielddoc"><p>unsigned 8-bit char; reserved </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaeb731252f37f7222324c68742a0c9048af20fbc55c4341098236cd500f2f6f655" name="ggaeb731252f37f7222324c68742a0c9048af20fbc55c4341098236cd500f2f6f655"></a>cp_last&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00058">58</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00062">62</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -520,7 +530,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="gga7712bff958edba25ada9f8e1bf442500a0973c9859545690a9e10eabb18a5bee4" name="gga7712bff958edba25ada9f8e1bf442500a0973c9859545690a9e10eabb18a5bee4"></a>k_value&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00106">106</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00112">112</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -548,7 +558,7 @@ Variables</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00187">187</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hpp_source.html#l00193">193</a> of file <a class="el" href="types_8hpp_source.html">types.hpp</a>.</p>
 
 </div>
 </div>
@@ -570,7 +580,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>iso 8601 formatted string based on ts </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00050">50</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00081">81</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -591,35 +601,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>utc seconds.nanoseconds formatted string based on ts </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00065">65</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
-
-</div>
-</div>
-<a id="gae62b9f343990dd5df17edd8cfe827306" name="gae62b9f343990dd5df17edd8cfe827306"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae62b9f343990dd5df17edd8cfe827306">&#9670;&#160;</a></span>consolidate_multifile_logs()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::string &gt; adc::consolidate_multifile_logs </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>match</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00096">96</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -639,7 +621,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the default processor affinity list. This may be useful to publishers that spawn processes. </p>
 
-<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00081">81</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8ipp_source.html#l00112">112</a> of file <a class="el" href="builder_8ipp_source.html">builder.ipp</a>.</p>
 
 </div>
 </div>
@@ -661,7 +643,7 @@ Variables</h2></td></tr>
 
 <p>get the string representation of a scalar_type value </p>
 
-<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00352">352</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00358">358</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
 
 </div>
 </div>
@@ -683,7 +665,7 @@ Variables</h2></td></tr>
 
 <p>get string of float using to_chars. </p>
 
-<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00128">128</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00132">132</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
 
 </div>
 </div>
@@ -705,7 +687,7 @@ Variables</h2></td></tr>
 
 <p>get string of double using to_chars. </p>
 
-<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00143">143</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00147">147</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
 
 </div>
 </div>
@@ -743,7 +725,7 @@ Variables</h2></td></tr>
 
 <p>get string of array </p>
 
-<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00190">190</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00194">194</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
 
 </div>
 </div>
@@ -765,7 +747,7 @@ Variables</h2></td></tr>
 
 <p>get the enum representation of a scalar_type string </p>
 
-<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00100">100</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00104">104</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
 
 </div>
 </div>
@@ -786,7 +768,134 @@ Variables</h2></td></tr>
 
 <p>return non-zero if to_string and enum scalar_type are inconsisent. </p>
 
-<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00358">358</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="enums_8ipp_source.html#l00364">364</a> of file <a class="el" href="enums_8ipp_source.html">enums.ipp</a>.</p>
+
+</div>
+</div>
+<a id="gaa5e768b4a91dd3ecd0fe2da354765f0f" name="gaa5e768b4a91dd3ecd0fe2da354765f0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5e768b4a91dd3ecd0fe2da354765f0f">&#9670;&#160;</a></span>get_multifile_log_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ADC_VISIBLE std::string adc::get_multifile_log_path </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceadc.html#a2acef0db014860808c166524947cb331">string_view</a>&#160;</td>
+          <td class="paramname"><em>dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceadc.html#a2acef0db014860808c166524947cb331">string_view</a>&#160;</td>
+          <td class="paramname"><em>wfid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility to get output directory from the multifile_publisher.</p>
+<p>Utility to get output directory glob pattern from the multifile_publisher, given the ADC_MULTIFILE_DIRECTORY and ADC_WFID values in use or their library-prefixed-versions. </p>
+
+<p class="definition">Definition at line <a class="el" href="utility_8ipp_source.html#l00037">37</a> of file <a class="el" href="utility_8ipp_source.html">utility.ipp</a>.</p>
+
+</div>
+</div>
+<a id="gaf8d55ab996e7cece949d1af24156f477" name="gaf8d55ab996e7cece949d1af24156f477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8d55ab996e7cece949d1af24156f477">&#9670;&#160;</a></span>consolidate_multifile_logs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ADC_VISIBLE std::vector&lt; std::string &gt; adc::consolidate_multifile_logs </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>match</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>old_paths</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>debug</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility to merge parallel outputs from multifile publisher. Consolidation should only happen after the multifile publisher is finalized; If a <a class="el" href="classadc_1_1multi__publisher.html">multi_publisher</a> is in use, consolidation should only happen after terminate has been called on the <a class="el" href="classadc_1_1multi__publisher.html">multi_publisher</a> (which calls finalize). On slow nfs-based file systems, some delay may be needed to ensure all files are seen on the aggregating client.</p>
+<dl class="section return"><dt>Returns</dt><dd>the list of consolidated logs from reduction of a multifile publisher tree.</dd></dl>
+<p>/FS/adc/$user/$adc_wfid/$app/$host-$pid_$start-$publisherptr.log /FS/adc/$user/no_wfid/$app/$host-$pid_$start-$publisherptr.log /FS/adc/$user/$cluster/$jobidraw/$task/$rank/$app/$host-$pid_$start-$publisherptr.log /FS/adc/ is multiuser; $user is owned/writable by $user</p>
+<p>Utility to merge parallel outputs from multifile publisher. Consolidation should only happen after the multifile publisher is finalized; If a <a class="el" href="classadc_1_1multi__publisher.html">multi_publisher</a> is in use, consolidation should only happen after terminate has been called on the <a class="el" href="classadc_1_1multi__publisher.html">multi_publisher</a> (which calls finalize). On slow nfs-based file systems, some delay may be needed to ensure all files are seen on the aggregating client. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">match</td><td>the result of an appropriate call to get_multifile_log_path. </td></tr>
+    <tr><td class="paramname">old_paths</td><td>the names of files that were successfully merged. May be empty; if not empty, deleting the files in the list is recommended.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the list of new consolidated logs from reduction of a multifile publisher tree.</dd></dl>
+<p>Example: /FS/adc/ may be multiuser /FS/adc/$user is owned/writable by $user /FS/adc/$user/$adc_wfid.* are created to prevent output conflicts, and then consolidated to: /FS/adc/$user/consolidated.$adc_wfid.adct-json.multi.xml Where ADC_WFID is not defined, a timestamp is used in its place. </p>
+
+<p class="definition">Definition at line <a class="el" href="utility_8ipp_source.html#l00029">29</a> of file <a class="el" href="utility_8ipp_source.html">utility.ipp</a>.</p>
+
+</div>
+</div>
+<a id="ga39c7d8d21ae5c28e0bb3135c9303059d" name="ga39c7d8d21ae5c28e0bb3135c9303059d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39c7d8d21ae5c28e0bb3135c9303059d">&#9670;&#160;</a></span>validate_multifile_log()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ADC_VISIBLE std::vector&lt; size_t &gt; adc::validate_multifile_log </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>check_json</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>record_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility to validate that multi-record files were correctly written. Each record is a json object delimited by &lt;adct-json&gt;&lt;/adct-json&gt; xml tags. </p><dl class="section return"><dt>Returns</dt><dd>vector of the start positions of invalid records. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>input to check. </td></tr>
+    <tr><td class="paramname">check_json</td><td>validates that individual record contents are json formatted (but does not check adct schema compliance). </td></tr>
+    <tr><td class="paramname">count</td><td>output of number of valid records found.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>&lt;adc-json&gt; tags cannot be nested. Unclosed tags are assumed closed by the start of the next record.</p>
+<p>BUGS: not yet implemented. returns emtpy vector and 0 record_count until implemented. </p>
+
+<p class="definition">Definition at line <a class="el" href="utility_8ipp_source.html#l00042">42</a> of file <a class="el" href="utility_8ipp_source.html">utility.ipp</a>.</p>
 
 </div>
 </div>
@@ -970,6 +1079,42 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>the version number of enum scalar_type and object_type </p>
+
+</div>
+</div>
+<a id="ga2eb8d601d057994370ce84a8dd5dbec5" name="ga2eb8d601d057994370ce84a8dd5dbec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2eb8d601d057994370ce84a8dd5dbec5">&#9670;&#160;</a></span>adc_utility_version</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structadc_1_1version.html">version</a> adc::adc_utility_version(&quot;1.0.0&quot;, {&quot;none&quot;}) </td>
+          <td>(</td>
+          <td class="paramtype">&quot;1.0.0&quot;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">{&quot;none&quot;}&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
