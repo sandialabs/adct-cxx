@@ -29,18 +29,18 @@ using std::string_view;
 
 /*! \brief Parallel file output publisher_api implementation.
   This plugin generates writes each message to the configured directory
-  tree with \<adct-json>\</adc-tjson> delimiters surrounding it.
+  tree with \<adct-json>\</adct-json> delimiters surrounding it.
   The output directory is "." by default, but may be overriden with 
   a full path defined in env("ADC_MULTIFILE_PLUGIN_DIRECTORY").
   The resulting mass of files can be reduced independently later
   by concatenating all files in the tree or more selectively
-  with a single call to the adc::multfile_assemble() function.
+  with a single call to the adc::consolidate_multifile_logs() function.
 
   Multiple independent multifile publishers may be created; exact filenames
   are not user controlled, to avoid collisions. Likewise there is no append
   mode.
 
-  DIR/$user/[$adc_wfid.]H_$host.$pid.$start.$publisherptr/$application.$rank.XXXXXX
+  DIR/$user/[$adc_wfid.]H_$host.P$pid.T$start.$publisherptr/$application.$rank.XXXXXX
 
   Files opened will remain opened until the publisher is finalized.
  */
@@ -98,7 +98,7 @@ private:
 		// dir/user/[wfid.].H_host.Ppid.Tstarttime.pptr/application.Rrank.XXXXXX files
 		// where application[.rank].XXXXXX is opened per process
 		// and application comes in header and rank via config.
-		// Here we set up dir/user/[wfid.].H_host.pid.starttime.ptr/ in fdir
+		// Here we set up dir/user/[wfid.].H_host.Ppid.Tstarttime.pptr/ in fdir
 		// and later we add application.rank.XXXXXX 
 		string wname;
 		char *wfid = getenv("ADC_WFID");
@@ -232,7 +232,6 @@ private:
 		if (ec) {
 			return;
 		}
-		// testme create_directories
 	}
 
 	/** If not yet created, add an element to the app_out file mapping.

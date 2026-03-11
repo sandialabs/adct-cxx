@@ -17,7 +17,7 @@ using std::string_view;
 
 /*! \brief File output publisher_api implementation.
   This plugin generates writes each message to the configured file, with
-  \<json>\</json> delimiters surrounding it.
+  \<adct-json>\</adct-json> delimiters surrounding it.
   The output directory is "." by default, but may be overriden with 
   a full path defined in env("ADC_FILE_PLUGIN_DIRECTORY").
   The file name is adc.file_plugin.log by default, and may be overridden
@@ -111,7 +111,7 @@ public:
 			return 2;
 		// write to stream
 		if (out.good()) {
-			out << "<json>"  << b->serialize() << "</json>" << std::endl;
+			out << "<adct-json>"  << b->serialize() << "</adct-json>" << std::endl;
 			if (debug) {
 				std::cout << "'file' wrote" << std::endl;
 			}
@@ -160,7 +160,7 @@ public:
 			return ec.value();
 		}
 		string fpath = fdir + "/" + fname;
-		// open dump file; messages are <json> tag separated, not endl separated, as content may include \n.
+		// open dump file; messages are <adct-json> tag separated, not endl separated, as content may include \n.
 		out.open(fpath, std::ofstream::out |
        			(fappend ? std::ofstream::app : std::ofstream::trunc));
 		if (out.good()) {
