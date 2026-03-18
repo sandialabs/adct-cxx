@@ -24,10 +24,28 @@ jobs:
       - name: Generate Doxygen
         run: |
           doxygen doc/Doxyfile
-      
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: doc/doxygen/html  
-          publish_branch: doc-deploy
+          path: doc/doxygen/html
+
+# deploy:
+#   needs: build
+#   runs-on: ubuntu-latest
+#   environment:
+#     name: github-pages
+#     url: ${{ steps.deployment.outputs.page_url }}
+#   steps:
+#     - name: Deploy to GitHub Pages Preview
+#       id: deployment
+#       uses: actions/deploy-pages@v3
+
+
+#
+#     - name: Deploy to GitHub Pages
+#       uses: peaceiris/actions-gh-pages@v3
+#       with:
+#         github_token: ${{ secrets.GITHUB_TOKEN }}
+#         publish_dir: doc/doxygen/html
+#         publish_branch: doc-deploy

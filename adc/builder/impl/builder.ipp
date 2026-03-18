@@ -1805,6 +1805,20 @@ void builder::add(std::string_view name, boost::json::value value) {
 }
 #endif
 
+void builder::add_mime(std::string_view name, std::string_view mime_type,
+	std::string_view encoding, std::string_view file_name, std::string_view data)
+{
+	if (badkey(name)) return;
+	boost::json::value jv = {
+		{"type", adc::to_string(cp_mime)},
+		{"mimetype", mime_type},
+		{"encoding", encoding},
+		{"filename", file_name},
+		{"value", data}
+	};
+	d[name] = jv;
+}
+
 
 void builder::add(std::string_view name, uint8_t value) {
 	if (badkey(name)) return;

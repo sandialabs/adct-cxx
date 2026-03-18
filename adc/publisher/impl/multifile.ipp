@@ -504,6 +504,7 @@ public:
 	 * Ignores directory names.
 	 * \param dest file to write merge result.
 	 * \param pattern glob pattern to match possible input files.
+	 * \param perm permissions on dest file, subject to umask.
 	 * \param merged list of files added
 	 * \param unmerged list of files found but not added due to some error. 
 	 *        If this list is not empty, the output file should be abandoned,
