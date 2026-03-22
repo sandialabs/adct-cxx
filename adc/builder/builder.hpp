@@ -419,6 +419,10 @@ in this table:
 
 	/// \brief add string which is an arbitrary precision decimal number
 	virtual void add_number_string(std::string_view name, std::string_view value) = 0;
+	
+	/// \brief add a string encoded (usually base64) object (usually image) 
+	virtual void add_mime(std::string_view name, std::string_view mime_type,
+			std::string_view encoding, std::string_view file_name, std::string_view data) = 0;
 
 #if ADC_BOOST_JSON_PUBLIC
 	// add a named raw json value (array, obj, or value)
