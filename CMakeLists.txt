@@ -207,8 +207,9 @@ if (MPI_FOUND)
 blt_add_executable(NAME adc.hello.world.mpi 
 	SOURCES examples/adcHelloWorldMPI.cpp
 	DEPENDS_ON adc_cxx stdc++fs mpi uuid pthread)
+
 install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.mpi 
-	TYPE bin )
+	TYPE BIN )
 endif()
 
 install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.auto ${CMAKE_BINARY_DIR}/bin/demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.simple.demo  ${CMAKE_BINARY_DIR}/bin/test.builder

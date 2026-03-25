@@ -124,6 +124,9 @@ public:
 	void add(std::string_view name, boost::json::value value);
 #endif
 
+	void add_mime(std::string_view name, std::string_view mime_type,
+		std::string_view encoding, std::string_view file_name, std::string_view data);
+
 	void add(std::string_view name, uint8_t value);
 	void add(std::string_view name, uint16_t value);
 	void add(std::string_view name, uint32_t value);

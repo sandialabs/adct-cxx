@@ -102,6 +102,7 @@ enum scalar_type {
 	cp_timespec,	//!< (second, nanosecond) as int64_t, int64_t pair from clock_gettime
 	cp_timeval,	//!< gettimeofday struct timeval (second, microsecond) as int64_t pair
 	cp_epoch,	//!< time(NULL) seconds since the epoch (UNIX) as int64_t
+	cp_mime,	//!< mime object
 	// reserved but not yet supported
 	cp_char8,	//!< unsigned 8-bit char; reserved
 	// end mark

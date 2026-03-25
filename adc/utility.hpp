@@ -30,6 +30,7 @@ ADC_VISIBLE std::string get_multifile_log_path(std::string_view dir, std::string
  * \param match the result of an appropriate call to get_multifile_log_path.
  * \param old_paths the names of files that were successfully merged. May be empty;
  *        if not empty, deleting the files in the list is recommended.
+ * \param debug if true, make more diagnostic noise.
  *
  * \return the list of new consolidated logs from reduction of a multifile publisher tree.
  *
@@ -49,9 +50,9 @@ ADC_VISIBLE std::vector< std::string > consolidate_multifile_logs(const std::str
  * \param filename input to check.
  * \param check_json validates that individual record contents are json formatted (but does not
  *        check adct schema compliance).
- * \param count output of number of valid records found.
+ * \param record_count output of number of valid records found.
  *
- * <adc-json> tags cannot be nested. Unclosed tags are assumed closed by the start of the next record.
+ * <adct-json> tags cannot be nested. Unclosed tags are assumed closed by the start of the next record.
  * 
  * BUGS:
  * not yet implemented. returns emtpy vector and 0 record_count until implemented.
