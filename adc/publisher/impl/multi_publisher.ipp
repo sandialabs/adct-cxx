@@ -8,6 +8,8 @@
 namespace adc {
 
 
+/*! @brief See @ref adc::multi_publisher_api
+ */
 class multi_publisher : public multi_publisher_api
 {
 public:

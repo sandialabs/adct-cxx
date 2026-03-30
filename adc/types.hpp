@@ -19,11 +19,11 @@
 
 namespace adc { 
 
-/** \addtogroup API
+/** @addtogroup API
  *  @{
  */
 
-/*! \brief A version with tags list.
+/*! @brief A version with tags list.
  */
 struct ADC_VISIBLE version {
 	const std::string name;
@@ -31,29 +31,29 @@ struct ADC_VISIBLE version {
 	version(const std::string n, std::vector <std::string> t) : name(n), tags(t) {}
 };
 
-/// \brief Set to 1 if 8/16 float types for gpus are supported.
+/// @brief Set to 1 if 8/16 float types for gpus are supported.
 /// ADC_SUPPORT_GPU_FLOATS should be defined by build-time configuration
 #define ADC_SUPPORT_GPU_FLOATS 0
 
-/// \brief Set to 1 if 80 bit floats for cpus are supported.
+/// @brief Set to 1 if 80 bit floats for cpus are supported.
 /// ADC_SUPPORT_EXTENDED_FLOATS should be defined by build-time configuration
 #define ADC_SUPPORT_EXTENDED_FLOATS 0
 
-/// \brief Set to 1 if 128 bit floats for cpus are supported.
+/// @brief Set to 1 if 128 bit floats for cpus are supported.
 /// ADC_SUPPORT_QUAD_FLOATS should be defined by build-time configuration
 #define ADC_SUPPORT_QUAD_FLOATS 0
 
-/// \brief include boost::json support in the API
+/// @brief include boost::json support in the API
 /// ADC_BOOST_JSON_PUBLIC could be defined by build-time configuration.
 /// If it is, this library forces boost::json and other boost dependencies
 /// on the build of any application which uses it.
 #define ADC_BOOST_JSON_PUBLIC 0
 
-/*! \brief the version number of enum scalar_type and object_type 
+/*! @brief the version number of enum scalar_type and object_type 
  */
 inline version enum_version("1.0.0", {"none"});
 
-/*! \brief field types for scientific data encode/decode with json.
+/*! @brief field types for scientific data encode/decode with json.
  *
  * Bit precision and C vs specialized strings are preserved
  * when data is tagged following this enum.
@@ -102,6 +102,7 @@ enum scalar_type {
 	cp_timespec,	//!< (second, nanosecond) as int64_t, int64_t pair from clock_gettime
 	cp_timeval,	//!< gettimeofday struct timeval (second, microsecond) as int64_t pair
 	cp_epoch,	//!< time(NULL) seconds since the epoch (UNIX) as int64_t
+	cp_mime,	//!< mime object
 	// reserved but not yet supported
 	cp_char8,	//!< unsigned 8-bit char; reserved
 	// end mark
@@ -115,7 +116,7 @@ enum key_type {
 	k_value
 };
 
-/*! \brief variant for querying builder data.
+/*! @brief variant for querying builder data.
  *
  * Any changes here must be reflected in the var_string operations.
  */
@@ -158,6 +159,7 @@ typedef std::variant<
 		// fixme: need to ifdef extended/quad/gpu types here in the variant definition.
 	> variant;
 
+/// @brief field provides a wrapper on void pointers for managing interaction with C or fortran.
 // these indicate how to handle a data pointer returned from builder lookups.
 // vp is often pointing into data, but not in all cases (string, 8byte types).
 struct field {
@@ -169,25 +171,25 @@ struct field {
 	variant data;
 };
 
-/*! \brief get the string representation of a scalar_type value */
+/*! @brief get the string representation of a scalar_type value */
 ADC_VISIBLE const std::string to_string(scalar_type st);
 
-/*! \brief get string of float using to_chars. */
+/*! @brief get string of float using to_chars. */
 ADC_VISIBLE const std::string to_string(float);
 
-/*! \brief get string of double using to_chars. */
+/*! @brief get string of double using to_chars. */
 ADC_VISIBLE const std::string to_string(double);
 
-/*! \brief get string of array */
+/*! @brief get string of array */
 ADC_VISIBLE const std::string to_string(void *data, scalar_type cptype, size_t count);
 
-/*! \brief get the enum representation of a scalar_type string */
+/*! @brief get the enum representation of a scalar_type string */
 ADC_VISIBLE scalar_type scalar_type_from_name(const std::string& name);
 
-/*! \brief return non-zero if to_string and enum scalar_type are inconsisent. */
+/*! @brief return non-zero if to_string and enum scalar_type are inconsisent. */
 ADC_VISIBLE int test_enum_strings();
 
-/*! \brief classification of json-adjacent structure elements.
+/*! @brief classification of json-adjacent structure elements.
  * This is not currently in use and may be retired soon.
  */
 enum object_type {
@@ -197,7 +199,7 @@ enum object_type {
 	co_scalar //!< single value
 };
 
-/*! \brief return string for printing from variant v.  */
+/*! @brief return string for printing from variant v.  */
 class var_string {
 public:
 	std::string operator()(const bool x) const { return std::string(x ? "true": "false"); }

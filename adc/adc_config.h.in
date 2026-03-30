@@ -4,8 +4,8 @@
  */
 #ifndef adc_config
 #define adc_config
-/*! \file adc_config.h
- * \brief A generated file for build-configuration discoveries.
+/*! @file adc_config.h
+ * @brief A generated file for build-configuration discoveries.
  */
 
 /*!

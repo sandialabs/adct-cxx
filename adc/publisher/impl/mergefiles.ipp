@@ -11,6 +11,7 @@
  * \param dest file to write merge result.
  * \param pattern glob pattern to match possible input files.
  * \param merged list of files added
+ * \param perm permission bits for opening the file; modified by umask.
  * \return 0 and updated merged list or errno and merged content undefined.
  */
 int glob_sendfile_join(const char *dest, const char *pattern, int perm, std::vector<std::string>& merged)

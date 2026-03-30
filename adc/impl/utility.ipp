@@ -18,6 +18,10 @@ namespace adc {
  * On slow nfs-based file systems, some delay may be needed to ensure all
  * files are seen on the aggregating client.
  *
+ * \param match glob expression from get_multifile_log_path, or user edit thereof.
+ * \param old_paths (output) names of files merged that caller may remove.
+ * \param debug make more diagnostic noise if true.
+ *
  * \return the list of consolidated logs from reduction of a multifile publisher tree.
  *
  * /FS/adc/$user/$adc_wfid/$app/$host-$pid_$start-$publisherptr.log
