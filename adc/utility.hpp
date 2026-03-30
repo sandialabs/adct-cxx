@@ -11,7 +11,7 @@
 
 namespace adc {
 
-/** \addtogroup API
+/** @addtogroup API
  *  @{
  */
 inline version adc_utility_version("1.0.0", {"none"});
@@ -27,12 +27,12 @@ ADC_VISIBLE std::string get_multifile_log_path(std::string_view dir, std::string
  * terminate has been called on the multi_publisher (which calls finalize).
  * On slow nfs-based file systems, some delay may be needed to ensure all
  * files are seen on the aggregating client.
- * \param match the result of an appropriate call to get_multifile_log_path.
- * \param old_paths the names of files that were successfully merged. May be empty;
+ * @param match the result of an appropriate call to get_multifile_log_path.
+ * @param old_paths the names of files that were successfully merged. May be empty;
  *        if not empty, deleting the files in the list is recommended.
- * \param debug if true, make more diagnostic noise.
+ * @param debug if true, make more diagnostic noise.
  *
- * \return the list of new consolidated logs from reduction of a multifile publisher tree.
+ * @return the list of new consolidated logs from reduction of a multifile publisher tree.
  *
  * Example:
  * /FS/adc/ may be multiuser
@@ -46,11 +46,11 @@ ADC_VISIBLE std::vector< std::string > consolidate_multifile_logs(const std::str
 
 /*! Utility to validate that multi-record files were correctly written.
  * Each record is a json object delimited by <adct-json></adct-json> xml tags.
- * \return vector of the start positions of invalid records.
- * \param filename input to check.
- * \param check_json validates that individual record contents are json formatted (but does not
+ * @return vector of the start positions of invalid records.
+ * @param filename input to check.
+ * @param check_json validates that individual record contents are json formatted (but does not
  *        check adct schema compliance).
- * \param record_count output of number of valid records found.
+ * @param record_count output of number of valid records found.
  *
  * <adct-json> tags cannot be nested. Unclosed tags are assumed closed by the start of the next record.
  * 

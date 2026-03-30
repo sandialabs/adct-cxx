@@ -118,6 +118,38 @@ std::shared_ptr<multi_publisher_api> factory::get_multi_publisher()
 	return p;
 }
 
+std::shared_ptr<multi_publisher_api> factory::get_multi_publisher(std::map< const std::string, const std::map<std::string, std::string> > plugin_map)
+{
+	std::shared_ptr<multi_publisher_api> mp(new multi_publisher);
+	if (!plugin_map.size()) {
+		return mp;
+	}
+	const std::map< std::string, std::string > m;
+	for (const auto& pair : plugin_map) {
+		std::shared_ptr<publisher_api> p = get_publisher(pair.first, pair.second);
+		if (p) {
+			if (debug) {
+				std::cout << "multi_publisher: publisher"
+					" found named: " << pair.first << std::endl;
+			}
+			int ei = p->initialize();
+			if (ei) {
+				if (debug) {
+					std::cout << "multi_publisher: initialize"
+						" failed for: " << pair.first << std::endl;
+				}
+				continue;
+			}
+			mp->add(p);
+		} else {
+			if (debug) {
+				std::cout << "multi_publisher: no publisher"
+					" found named: " << pair.first << std::endl;
+			}
+		}
+	}
+}
+
 std::shared_ptr<multi_publisher_api> factory::get_multi_publisher_from_env(const std::string& namelist)
 {
 	std::shared_ptr<multi_publisher_api> mp(new multi_publisher);

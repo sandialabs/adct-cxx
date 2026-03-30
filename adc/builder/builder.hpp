@@ -17,23 +17,23 @@
 
 namespace adc {
 
-/** \addtogroup API
+/** @addtogroup API
  *  @{
  */
 
-/// \return iso 8601 formatted string based on ts
+/// @return iso 8601 formatted string based on ts
 std::string format_timespec_8601(struct timespec& ts);
 
-/// \return utc seconds.nanoseconds formatted string based on ts
+/// @return utc seconds.nanoseconds formatted string based on ts
 std::string format_timespec_utc_ns(struct timespec& ts);
 
 inline version builder_api_version("1.0.0", {"none"});
 
-/** \addtogroup builder_add_host_options
+/** @addtogroup builder_add_host_options
  *  @{
  */
-/** \def ADC_HS_
- * \brief bit values to control content of the host section.
+/** @def ADC_HS_
+ * @brief bit values to control content of the host section.
  *
  * The host data section has a variety of optional subsections.
  * The ADC_HS_* bit values desired are ORd (|) together.
@@ -47,37 +47,37 @@ inline version builder_api_version("1.0.0", {"none"});
 /** OR-d ADC_HS_* bits */
 typedef int32_t adc_hs_subsection_flags;
 
-/// \brief ADC_HS_BASE collects just the hostname via gethostname()
+/// @brief ADC_HS_BASE collects just the hostname via gethostname()
 #define ADC_HS_BASE 0x0
 
-/// \brief ADC_HS_OS collects other items from uname().
+/// @brief ADC_HS_OS collects other items from uname().
 #define ADC_HS_OS 0x1
 
-/// \brief ADC_HS_RAMSIZE collects MemTotal
+/// @brief ADC_HS_RAMSIZE collects MemTotal
 #define ADC_HS_RAMSIZE 0x2
 
-/// \brief ADC_HS_ENV collects env vars listed in env("ADC_HOST_SECTION_ENV") which is :-separated.
+/// @brief ADC_HS_ENV collects env vars listed in env("ADC_HOST_SECTION_ENV") which is :-separated.
 /// Example:  ADC_HOST_SECTION_ENV="SNLCLUSTER:SNLNETWORK:SNLSITE:SNLSYSTEM:SNLOS"
 #define ADC_HS_ENV 0x4
 
-/// \brief ADC_HS_CPU collects details from lscpu -J  (requires lscpu installed)
+/// @brief ADC_HS_CPU collects details from lscpu -J  (requires lscpu installed)
 #define ADC_HS_CPU 0x10
 
-/// \brief ADC_HS_GPU collects gpu data available from lspci (requires lspci installed)
+/// @brief ADC_HS_GPU collects gpu data available from lspci (requires lspci installed)
 #define ADC_HS_GPU 0x20
 
-/// \brief ADC_HS_NUMA collects numa node, cpu, and per node memory from numactl -H (requires numactl installed)
+/// @brief ADC_HS_NUMA collects numa node, cpu, and per node memory from numactl -H (requires numactl installed)
 #define ADC_HS_NUMA 0x40
 
-/// \brief all ADC_HS_* optional data included
+/// @brief all ADC_HS_* optional data included
 #define ADC_HS_ALL (ADC_HS_OS|ADC_HS_RAMSIZE|ADC_HS_ENV|ADC_HS_CPU|ADC_HS_GPU|ADC_HS_NUMA)
 /** @}*/
 
-/** \addtogroup builder_add_mpi_options
+/** @addtogroup builder_add_mpi_options
  *  @{
  */
-/** \def ADC_MPI_
- * \brief bit values to control output of the add_mpi function
+/** @def ADC_MPI_
+ * @brief bit values to control output of the add_mpi function
  *
  * The mpi data has a variety of optional fields.
  * The ADC_MPI_* bit values desired are ORd (|) together.
@@ -86,50 +86,51 @@ typedef int32_t adc_hs_subsection_flags;
 /** OR-d ADC_MPI_* bits */
 typedef int32_t adc_mpi_field_flags;
 
-/// \brief include no mpi fields
+/// @brief include no mpi fields
 #define ADC_MPI_NONE 0x0
 
-/// \brief include "mpi_rank" field from mpi_comm_rank
+/// @brief include "mpi_rank" field from mpi_comm_rank
 #define ADC_MPI_RANK 0x1
 
-/// \brief include "mpi_size" field from mpi_comm_size
+/// @brief include "mpi_size" field from mpi_comm_size
 #define ADC_MPI_SIZE 0x2
 
-/// \brief include "mpi_name" field from mpi_comm_name
+/// @brief include "mpi_name" field from mpi_comm_name
 #define ADC_MPI_NAME 0x4
 
-/// \brief include "mpi_hostlist" subsection from the communicator
+/// @brief include "mpi_hostlist" subsection from the communicator
 ///
 /// If this value is included, then the call to add_mpi must be collective.
 #define ADC_MPI_HOSTLIST 0x10
 
-/// \brief include "mpi_rank_host" subsection from the communicator
+/// @brief include "mpi_rank_host" subsection from the communicator
 ///
 /// If this value is included, then the call to add_mpi must be collective.
 #define ADC_MPI_RANK_HOST 0x20
 
-/// \brief include "mpi_version" field from MPI_VERSION.MPI_SUBVERSIUON
+/// @brief include "mpi_version" field from MPI_VERSION.MPI_SUBVERSIUON
 #define ADC_MPI_VER 0x100
 
-/// \brief include mpi_get_library_version result.
+/// @brief include mpi_get_library_version result.
 ///
 /// If openmpi is not in use, no value is defined.
 #define ADC_MPI_LIB_VER 0x200
 
-/// \brief include all mpi options. 
+/// @brief include all mpi options. 
 /// If this value is used, then the call to add_mpi must be collective.
 #define ADC_MPI_ALL (ADC_MPI_RANK|ADC_MPI_SIZE|ADC_MPI_NAME|ADC_MPI_HOSTLIST|ADC_MPI_RANK_HOST|ADC_MPI_VER|ADC_MPI_LIB_VER)
 
-/// \brief include all mpi options that do not require collective work. 
+/// @brief include all mpi options that do not require collective work. 
 #define ADC_MPI_LOCAL (ADC_MPI_RANK|ADC_MPI_SIZE|ADC_MPI_NAME|ADC_MPI_VER|ADC_MPI_LIB_VER)
 
 /** @}*/
 
 /*!
-\brief The builder api is used to construct structured log (json) messages that follow naming conventions.
+@brief The builder api is used to construct structured log (json) messages that follow naming conventions.
 
-To be stored in the ADC storage system, every message must be created from the factory and then
-initialized with at least the add_header_section function.
+To be stored in the ADC storage system, every message (builder object) must be created from the factory and then initialized with at least the add_header_section function. 
+To update and reuse a builder instance, add_header_section must be called again
+before the update is published.
 
 Primitives, arrays, or strings from existing application control formats including
 xml, yaml, or json and common containers of strings are supported.
@@ -140,46 +141,55 @@ and (in some cases) introduce data typing ambiguities.
 class ADC_VISIBLE builder_api {
 public:
 	virtual ~builder_api() {};
-	/// \brief  auto-populate the "header" section with application name
-	/// and required local data
+	/// @brief  auto-populate the "header" section with application name,
+	/// required local data, and uuid. To use the same builder instance for
+	/// annother message, call add_header_section again.
 	virtual void add_header_section(std::string_view application_name) = 0;
 
-	/** \brief auto-populate the "host" section based on bitflags.
+	/** @brief auto-populate the "host" section based on bitflags.
 	 * There are many optional subsections covering cpus, gpus, numa, OS. RAM, etc.
-	 * @param bitflags the OR (|) of the desired ADC_HS_*.
+	 * @param bitflags the OR (|) of the desired ADC_HS_*. see @ref builder_add_host_options.
 	 */
 	virtual void add_host_section(adc_hs_subsection_flags bitflags) = 0;
 
-	/// \brief create the "app_data" section with data defined by the application writer.
+	/// @brief create the "app_data" section with data defined by the application writer.
 	///
-	/// Any relationship to previous jobs/higher level workflows goes in app_data,
+	/// It is recommended that any relationship identifiers to previous jobs or higher 
+	/// level environments goes in app_data, unless supported by add_workflow_section,
+	/// add_slurm_section or other normalized sections.
+	/// 
 	/// Example:
-	///  std::shared_ptr< builder_api > app_data = factory.get_builder();
+	///  auto app_data = factory.get_builder();
 	///  app_data.add("saw_id", getenv("SAW_WORKFLOW_ID");
 	///  builder->add_app_data_section(app_data);
 	virtual void add_app_data_section(std::shared_ptr< builder_api > app_data) = 0;
 
-	/// \brief  populate application run-time physics (re)configuration/result to "model_data" section.
-	/// For example initial or changes in mesh/particle decomp go here.
+	/// @brief populate application run-time physics (re)configuration or
+	/// result to "model_data" section.
+	/// For example initial or changes in mesh or particle decomp go here.
 	virtual void add_model_data_section(std::shared_ptr< builder_api > model_data) = 0;
 	
-	/// Auto-populate "code" section with os-derived info at time of call,
-	/// and user-provided tag string, version subsection, and code_details subsction.
+	/// @brief Auto-populate "code" section with os-derived info at time of call,
+	/// and user-provided tag string, version subsection, and code_details subsection.
 	///
-	/// Example: pending.
+	/// The os derived info includes program full path, base name, and dynamically 
+	/// linked libraries.
+	/// @param code_details additional info common to all invocations of the program,
+	///        for example information about static-linked libraries.
 	virtual void add_code_section(std::string tag, std::shared_ptr< builder_api > version, std::shared_ptr< builder_api > code_details) = 0;
 
-	/// \brief Populate build/install "configuration" information such as options enabled
-	///
-	/// Example: pending.
+	/// @brief Populate build/install "configuration" information such as options enabled
+	/// @param build_details option list.
 	virtual void add_code_configuration_section(std::shared_ptr< builder_api > build_details) = 0;
 
-	/// \brief populate "exit_data" section with code and status stream and user provided details.
-	///
-	/// Example: pending.
+	/// @brief populate "exit_data" section with code and status string & user provided details.
+	/// @param return_code exit or exit-like code 
+	/// @param status human-readable string describing the exit
+	/// @param status_details any final or summary results of interest to application
+	/// users or developers, in structured form.
 	virtual void add_exit_data_section(int return_code, std::string status, std::shared_ptr< builder_api > status_details) = 0;
 	
-	/// \brief populate "memory_usage" section with current host /proc/meminfo data 
+	/// @brief populate "memory_usage" section with current host /proc/meminfo data 
 	/// in the style of free(1).
 	///
 	/// values included are:
@@ -188,52 +198,52 @@ public:
 	/// swap_total swap_used swap_free
 	virtual void add_memory_usage_section() = 0;
 
-	/// \brief get the existing named section
-	/// \return the section, or an empty pointer if it doesn't exist.
+	/// @brief get the existing named section
+	/// @return the section, or an empty pointer if it doesn't exist.
 	virtual std::shared_ptr< builder_api > get_section(std::string_view name) = 0;
 
-	/// \brief get the names of sections
-	/// \return vector of names, or an empty vector.
+	/// @brief get the names of sections
+	/// @return vector of names, or an empty vector.
 	virtual std::vector< std::string > get_section_names() = 0;
 
-	/// \brief get the existing named nested field in the builder.
-	/// \param path a simple json path such as /a/b/c which resolves to
+	/// @brief get the existing named nested field in the builder.
+	/// @param path a simple json path such as /a/b/c which resolves to
 	///        a value added via one of the add* functions.
-	/// \return the field description, with kt==k_none if not found.
+	/// @return the field description, with kt==k_none if not found.
 	/// If the value was not set via this interface, k_none is returned
 	/// If the returned value has kt==k_section, call get_section instead.
 	virtual const field get_value(std::string_view path) = 0;
 
-	/// \brief get the existing named nested scalar string value.
-	/// \param path a simple json path such as /a/b/c which resolves to
+	/// @brief get the existing named nested scalar string value.
+	/// @param path a simple json path such as /a/b/c which resolves to
 	///        a value added via one of the add* functions.
-	/// \return NULL if the path is not matched or is not a string of some sort.
+	/// @return NULL if the path is not matched or is not a string of some sort.
 	virtual const char *get_value_string(std::string_view path) = 0;
 
-	/// \brief get the existing named scalar value that can be correctly cast as int64_t
-	/// \param path a simple json path such as /a/b/c which resolves to
+	/// @brief get the existing named scalar value that can be correctly cast as int64_t
+	/// @param path a simple json path such as /a/b/c which resolves to
 	///        a value added via one of the add* functions.
-	/// \return INT64_MAX  if field_name is for data which is not
+	/// @return INT64_MAX  if field_name is for data which is not
 	/// compatible with int64_t.
 	virtual int64_t get_value_int64(std::string_view path) = 0;
 
-	/// \brief get the existing named scalar value that can be correctly cast as int64_t
-	/// \param path a simple json path such as /a/b/c which resolves to
+	/// @brief get the existing named scalar value that can be correctly cast as int64_t
+	/// @param path a simple json path such as /a/b/c which resolves to
 	///        a value added via one of the add* functions.
-	/// \return UINT64_MAX if field_name is for data which is not
+	/// @return UINT64_MAX if field_name is for data which is not
 	/// compatible with uint64_t.
 	virtual uint64_t get_value_uint64(std::string_view path) = 0;
 
-	/// \brief get the names of non-section fields in the section
-	/// \return vector of names, or an empty vector.
+	/// @brief get the names of non-section fields in the section
+	/// @return vector of names, or an empty vector.
 	virtual std::vector< std::string > get_field_names() = 0;
 
-	/// \brief populate mpi_comm_$name section with members mpi_* as indicated by bitflags
-	/// \param name scoping label of the communicator, something like world, ocean, atmosphere.
-	/// \param mpi_comm_p address of an MPI_Comm variable.
+	/// @brief populate mpi_comm_$name section with members mpi_* as indicated by bitflags
+	/// @param name scoping label of the communicator, something like world, ocean, atmosphere.
+	/// @param mpi_comm_p address of an MPI_Comm variable.
 	/// If mpi_comm_p is NULL,
 	/// then rank/size is 0/1 and all other fields are trivial.
-	/// \param bitflags the or (|) of ADC_MPI_* flags desired.
+	/// @param bitflags the or (|) of ADC_MPI_* flags desired. @ref builder_add_mpi_options
 	/// If hostlist is included, this call must be made collectively.
 	///
 	/// It is recommended to call add_mpi_section once per run on all ranks
@@ -244,7 +254,7 @@ public:
 	//
 	virtual void add_mpi_section(std::string_view name, void *mpi_comm_p, adc_mpi_field_flags bitflags) = 0;
 
-	/// \brief add gitlab_ci environment variable dictionary.
+	/// @brief add gitlab_ci environment variable dictionary.
 	/// The section added is named "gitlab_ci".
 	///
 	/// The variables collected from env() are:
@@ -264,7 +274,7 @@ public:
 	/// Where the values are strings from the corresponding env() values.
 	virtual void add_gitlab_ci_section() = 0;
 
-	/// \brief add data from adc_wfid_ environment variables.
+	/// @brief add data from adc_wfid_ environment variables.
 	/// The section name is "adc_workflow".
 	///
 	/// The env variables collected are:
@@ -291,7 +301,7 @@ public:
 	/// the entire task hierarchy identifier can be collected.
 	virtual void add_workflow_section() = 0;
 
-	/// \brief add list of child uuids to "adc_workflow" section
+	/// @brief add list of child uuids to "adc_workflow" section
 	/// after add_workflow_section has been called. This call is optional.
 	/// 
 	/// This call may be repeated if necessary, incrementally building the child list.
@@ -303,7 +313,7 @@ public:
 	/// 	wfid_children: $ADC_WFID_CHILDREN
 	virtual void add_workflow_children(std::vector< std::string >& child_uuids) = 0;
 
-	/// \brief add slurm output environment variable dictionary elements.
+	/// @brief add slurm output environment variable dictionary elements.
 	/// The section added is named "slurm".
 	///
 	/// The variables collected from env() are:
@@ -314,17 +324,19 @@ public:
 	///
 	/// Where the values are strings from the corresponding env() values.
 	virtual void add_slurm_section() = 0;
-	/// \brief add slurm output environment variable dictionary elements,
+	/// @brief add slurm output environment variable dictionary elements,
 	/// with the names of additionally desired SLURM output variables.
 	virtual void add_slurm_section(const std::vector<std::string>& slurmvars) = 0;
 
-	/// \brief copy populated generic section into the builder under specified name.
-	/// \param name key for a new object in the output.
-	/// \param section the value for the object. Note conventional names for certain sections
+	/// @brief copy populated generic section into the builder under specified name.
+	/// @param name key for a new object in the output.
+	/// @param section the value for the object. Note conventional names for certain sections
 	/// found in other add_*section functions.
 	virtual void add_section(std::string_view name, std::shared_ptr< builder_api > section) = 0;
 
-	/*!
+	/*! @brief Add a scalar from data in a void pointer.
+
+@code
 Conversion of the void pointer to data follows the enum type given, as listed
 in this table:
         cp_bool: bool *
@@ -374,20 +386,21 @@ in this table:
 
 	Calls with any unlisted enum value are ignored silently.
 	Calls with any type not supported in the current compilation are ignored.
+@endcode
 
 	 */
 	virtual void add_from_pointer_type(std::string_view name, void *ref, enum scalar_type t) = 0;
 
-	/// \brief add a named boolean
+	/// @brief add a named boolean
 	virtual void add(std::string_view name, bool value) = 0;
 
-	/// \brief add a named character
+	/// @brief add a named character
 	virtual void add(std::string_view name, char value) = 0;
 
-	/// \brief add a named char16_t
+	/// @brief add a named char16_t
 	virtual void add(std::string_view name, char16_t value) = 0;
 
-	/// \brief add a named char32_t
+	/// @brief add a named char32_t
 	virtual void add(std::string_view name, char32_t value) = 0;
 
 	/// add null-terminated string
@@ -408,19 +421,24 @@ in this table:
 	/// add null-terminated string filepath
 	virtual void add_path(std::string_view name, std::string_view value) = 0;
 
-	/// \brief add string which is serialized json.
+	/// @brief add string which is serialized json.
 	virtual void add_json_string(std::string_view name, std::string_view value) = 0;
 
-	/// \brief add string which is yaml.
+	/// @brief add string which is yaml.
 	virtual void add_yaml_string(std::string_view name, std::string_view value) = 0;
 
-	/// \brief add string which is xml.
+	/// @brief add string which is xml.
 	virtual void add_xml_string(std::string_view name, std::string_view value) = 0;
 
-	/// \brief add string which is an arbitrary precision decimal number
+	/// @brief add string which is an arbitrary precision decimal number
 	virtual void add_number_string(std::string_view name, std::string_view value) = 0;
 	
-	/// \brief add a string encoded (usually base64) object (usually image) 
+	/// @brief add a string encoded object (e.g. image) 
+	/// @param name the name in the message of this field
+	/// @param mime_type e.g. "image/png"
+	/// @param encoding e.g. "base64"
+	/// @param file_name e.g. "origin.png"
+	/// @param data character array of the encoded object.
 	virtual void add_mime(std::string_view name, std::string_view mime_type,
 			std::string_view encoding, std::string_view file_name, std::string_view data) = 0;
 
@@ -463,17 +481,17 @@ in this table:
 	/// add unix epoch seconds (gettimeofday)
 	virtual void add_epoch(std::string_view name, int64_t epoch) = 0;
 
-	/// Fixed length arrays of scalar members.
-	/// \param name the label for the array
-	/// \param value the array pointer
-	/// \param len the number of elements in the array
-	/// \param container is a hint about an original container such as
+	/// @brief Add a fixed length arrays of scalar members.
+	/// @param name the label for the array
+	/// @param value the array pointer
+	/// @param len the number of elements in the array
+	/// @param container is a hint about an original container such as
 	///        "pointer", "set", "vector", "list", "range", "array".
 	///
 	/// Helper functions are provided to map std containers to the add_array
 	virtual void add_array(std::string_view name, bool value[], size_t len, std::string_view container = "pointer") = 0;
 
-	/// store fixed length array. this is how a character buffer containing nuls is stored.
+	/// @brief store fixed length array. this is how a character buffer containing nuls is stored.
 	virtual void add_array(std::string_view name, const char *value, size_t len, std::string_view container = "pointer") = 0;
 	virtual void add_array(std::string_view name, char16_t value[], size_t len, std::string_view container = "pointer") = 0;
 	virtual void add_array(std::string_view name, char32_t value[], size_t len, std::string_view container = "pointer") = 0;
