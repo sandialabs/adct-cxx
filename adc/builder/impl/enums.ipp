@@ -208,7 +208,7 @@ const std::string to_string(void *data, scalar_type cptype, size_t count) // pre
 	case cp_bool:
 		{
 			bool *a = (bool *)data;
-			for (size_t i; i < count; i++) {
+			for (size_t i = 0; i < count; i++) {
 				o << (a[i] ? "true" : "false");
 				if (i < count-1)
 					o << ", ";

@@ -433,11 +433,23 @@ void builder::add_header_section(std::string_view application_name)
 	uid_t uid = geteuid();
 	struct passwd pw;
 	struct passwd *pwp = nullptr;
-	int bsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-	if (bsize < 0)
-		bsize = 16384;
-	char buf[bsize];
-	getpwuid_r(uid, &pw, buf, bsize, &pwp);
+
+	long limit = sysconf(_SC_GETPW_R_SIZE_MAX);
+	size_t bufsize = (limit > 0) ? static_cast<size_t>(limit) : 16384;
+	std::vector<char> buf;
+	while (true) {
+		buf.resize(bufsize);
+		int berr = getpwuid_r(uid, &pw, buf.data(), bufsize, &pwp);
+		if (berr == ERANGE) {
+			bufsize *= 2;
+			continue;
+		}
+		if (berr) {
+			pwp = nullptr;
+			break;
+		}
+	}
+
 	const char *uname;
 	if (pwp) {
 		uname = pw.pw_name;
@@ -1385,26 +1397,28 @@ void builder::add_mpi_section(std::string_view name, void *mpi_comm_p, adc_mpi_f
 	if ( bitflags & ADC_MPI_LIB_VER) {
 		std::ostringstream lversion;
 #ifdef OMPI_VERSION
-#define USE_set_lib_version
+		#define USE_set_lib_version
 		lversion << "OpenMPI " << OMPI_MAJOR_VERSION << "." <<
 			OMPI_MINOR_VERSION << "." << OMPI_RELEASE_VERSION;
 		goto set_lib_version;
 #else
-#ifdef MVAPICH2_VERSION
-#define USE_set_lib_version
+	#ifdef MVAPICH2_VERSION
+		#define USE_set_lib_version
 		lversion << MVAPICH2_VERSION;
 		goto set_lib_version;
-#else
-#ifdef MPICH_VERSION
-#define USE_set_lib_version
+	#else
+		#ifdef MPICH_VERSION
+		#define USE_set_lib_version
 		lversion << MPICH_VERSION;
 		goto set_lib_version;
-#endif
-#endif
+		#endif
+	#endif
 #endif
 		char lv[MPI_MAX_LIBRARY_VERSION_STRING];
+		{ 
 		int sz = 0;
 		err = MPI_Get_library_version(lv, &sz);
+		}
 		lversion << lv;
 #ifdef USE_set_lib_version
 set_lib_version:
