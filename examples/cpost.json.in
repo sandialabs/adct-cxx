@@ -1,0 +1,1 @@
+{"header":{"adc_api_version":{"version":"1.0.0","tags":["none"]},"timestamp":"@TIME@","datestamp":"@DATE@","user":"@USER@","uid":"@UID@","application":"cxx_demo_1","uuid":"@UUID@"},"foo":{"a":"bash-post"}}
