@@ -148,6 +148,7 @@ std::shared_ptr<multi_publisher_api> factory::get_multi_publisher(std::map< cons
 			}
 		}
 	}
+	return mp;
 }
 
 std::shared_ptr<multi_publisher_api> factory::get_multi_publisher_from_env(const std::string& namelist)
