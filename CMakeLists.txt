@@ -126,8 +126,6 @@ if (ADIAK_FOUND)
 		adiak)
 endif()
 
-#list(APPEND adc_cxx_dependencies uuid)
-
 # Generate the adc_config.h header
 configure_file(adc/adc_config.h.in adc/adc_config.h)
 add_custom_target(headers ALL DEPENDS ${GENHEADERS})
@@ -143,6 +141,11 @@ blt_add_library(NAME adc_cxx
 		SOURCES    ${adc_cxx_sources}
 		DEPENDS_ON ${adc_cxx_dependencies}
 		SHARED)
+
+target_link_libraries(adc_cxx
+  PUBLIC uuid
+)
+
 
 include(GenerateExportHeader)
 generate_export_header(adc_cxx)
@@ -185,28 +188,28 @@ install(FILES
 # Define the executable targets
 blt_add_executable(NAME test.builder
 	SOURCES examples/testBuilder.cpp
-	DEPENDS_ON adc_cxx stdc++fs uuid)
+	DEPENDS_ON adc_cxx stdc++fs)
 
 blt_add_executable(NAME demo.builder
 	SOURCES examples/demoBuilder.cpp
-	DEPENDS_ON adc_cxx stdc++fs uuid)
+	DEPENDS_ON adc_cxx stdc++fs)
 
 blt_add_executable(NAME adc.hello.world.auto
 	SOURCES	examples/adcHelloWorldAuto.cpp
-	DEPENDS_ON adc_cxx stdc++fs uuid)
+	DEPENDS_ON adc_cxx stdc++fs)
 
 blt_add_executable(NAME mpi.demo.builder
 	SOURCES	examples/mpiDemoBuilder.cpp
-	DEPENDS_ON adc_cxx stdc++fs uuid)
+	DEPENDS_ON adc_cxx stdc++fs)
 
 blt_add_executable(NAME mpi.simple.demo 
 	SOURCES examples/mpiSimpleDemo.cpp
-	DEPENDS_ON adc_cxx stdc++fs uuid)
+	DEPENDS_ON adc_cxx stdc++fs)
 
 if (MPI_FOUND)
 blt_add_executable(NAME adc.hello.world.mpi 
 	SOURCES examples/adcHelloWorldMPI.cpp
-	DEPENDS_ON adc_cxx stdc++fs mpi uuid pthread)
+	DEPENDS_ON adc_cxx stdc++fs mpi pthread)
 
 install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.mpi 
 	TYPE BIN )
