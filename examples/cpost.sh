@@ -2,7 +2,17 @@
 # get the SERVER variable
 . ./cpost.include.sh
 # use the local input file with -d option
-fn=./cpost.json
+uuid=$(uuid -v4)
+uid=$(id -u)
+etime=$(date +%s.%N)
+edate=$(date +%FT%X.%N%Z)
+cat cpost.json.in | sed -e "s/@USER@/$USER/g" \
+	-e "s/@TIME@/$etime/g"  \
+	-e "s/@DATE@/$edate/g"  \
+	-e "s/@UID@/$uid/g"  \
+	-e "s/@UUID@/$uuid/g"  \
+> ./cpost.json.tmp
+fn=./cpost.json.tmp
 # write curl output to local scratch file.
 log=$(mktemp)
 curl -X POST \
