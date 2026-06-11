@@ -446,8 +446,9 @@ void builder::add_header_section(std::string_view application_name)
 		}
 		if (berr) {
 			pwp = nullptr;
-			break;
+			// we proceed silently as unknown_user in this highly improbable case
 		}
+		break;
 	}
 
 	const char *uname;
