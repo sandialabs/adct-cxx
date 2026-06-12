@@ -50,10 +50,10 @@ public:
 	/// Overridden with env("ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_PROG").
 	inline static const char* adc_ldms_message_publish_plugin_prog_default = "/usr/sbin/ldms_msg_publish";
 
-	/// \brief channel of the ADC messages published
+	/// \brief tag of the ADC messages published
 	/// LDMS aggregators must be subscribed to this name.
-	/// Overridden with env("ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_CHANNEL").
-	inline static const char* adc_ldms_message_publish_plugin_channel_default = "adc_publish_api";
+	/// Overridden with env("ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_TAG").
+	inline static const char* adc_ldms_message_publish_plugin_tag_default = "adc_publish_api";
 
 	/// \brief authentication method for ldms message connections; ldmsd listeners must match.
 	/// Overridden with env("ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_AUTH").
@@ -82,7 +82,7 @@ private:
 	const std::map< const string, const string > plugin_ldms_message_publish_config_defaults =
 	{	{"DIRECTORY", adc_ldms_message_publish_plugin_directory_default},
 		{"PROG", adc_ldms_message_publish_plugin_prog_default},
-		{"CHANNEL", adc_ldms_message_publish_plugin_channel_default},
+		{"TAG", adc_ldms_message_publish_plugin_tag_default},
 		{"AUTH", adc_ldms_message_publish_plugin_auth_default},
 		{"HOST", adc_ldms_message_publish_plugin_host_default},
 		{"PORT", adc_ldms_message_publish_plugin_port_default},
@@ -97,7 +97,7 @@ private:
 	string fdir;
 	string prog;
 	string auth;
-	string channel;
+	string tag;
 	string port;
 	string host;
 	int debug;
@@ -105,7 +105,7 @@ private:
 	bool paused;
 	enum mode mode;
 
-	int config(const string& dir, string_view shost, string_view sport, string_view sprog, string_view sauth, string_view schannel, const string& sdebug) {
+	int config(const string& dir, string_view shost, string_view sport, string_view sprog, string_view sauth, string_view stag, const string& sdebug) {
 		if (mode != pi_config)
 			return 2;
 		uid_t ui = geteuid();
@@ -114,7 +114,7 @@ private:
 		host = shost;
 		prog = sprog;
 		auth = sauth;
-		channel = schannel;
+		tag = stag;
 		mode = pi_init;
 		std::stringstream ss(sdebug);
 		ss >> debug;
@@ -171,7 +171,7 @@ private:
 			" -h " + host +
 			" -p " + port +
 			" -a " + auth +
-			" -m " + channel +
+			" -m " + tag +
 			" -f " + f +
 			"> /dev/null 2>&1 ; /bin/rm -f " + f + ") &";
 		int err2 = std::system(qcmd.c_str());
@@ -231,9 +231,9 @@ public:
 		string port = get(m, "PORT", env_prefix);
 		string prog = get(m, "PROG", env_prefix);
 		string auth = get(m, "AUTH", env_prefix);
-		string channel = get(m, "CHANNEL", env_prefix);
+		string tag = get(m, "TAG", env_prefix);
 		string sdebug = get(m, "DEBUG", env_prefix);
-		return config(d, host, port, prog, auth, channel, sdebug);
+		return config(d, host, port, prog, auth, tag, sdebug);
 	}
         
 	const std::map< const std::string, const std::string> & get_option_defaults() {

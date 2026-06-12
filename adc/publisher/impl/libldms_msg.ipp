@@ -38,27 +38,27 @@ class libldms_msg_publish_plugin : public publisher_api {
 		pi_pub_or_final
 	};
 public:
-	/// \brief name of the channel ADC messages go into
+	/// \brief name of the tag ADC messages go into
 	/// LDMS aggregators must be subscribed to this name.
-	/// Overridden with env("ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_CHANNEL").
-	inline static const char* adc_libldms_msg_publish_plugin_channel_default = "adc_publish_api";
+	/// Overridden with env("ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_TAG").
+	inline static const char* adc_libldms_msg_publish_plugin_tag_default = "adc_publish_api";
 
-	/// \brief authentication method for channel connections; ldmsd listeners must match.
+	/// \brief authentication method for tag connections; ldmsd listeners must match.
 	/// Overridden with env("ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_AUTH").
 	inline static const char* adc_libldms_msg_publish_plugin_auth_default = "munge";
 
-	/// \brief port for channel connections; ldmsd listeners must match.
+	/// \brief port for tag connections; ldmsd listeners must match.
 	/// Overridden with env("ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_PORT").
 	inline static const char* adc_libldms_msg_publish_plugin_port_default = "412";
 
-	/// \brief host for channel connections; ldmsd must be listening on the host.
+	/// \brief host for tag connections; ldmsd must be listening on the host.
 	/// Overridden with env("ADC_LIBLDMS_MSG_PUBLISH_PLUGIN_HOST").
 	inline static const char* adc_libldms_msg_publish_plugin_host_default = "localhost";
 
 private:
 	const std::map< const string, const string > plugin_libldms_msg_publish_config_defaults =
 	{
-		{"CHANNEL", adc_libldms_msg_publish_plugin_channel_default},
+		{"TAG", adc_libldms_msg_publish_plugin_tag_default},
 		{"AUTH", adc_libldms_msg_publish_plugin_auth_default},
 		{"HOST", adc_libldms_msg_publish_plugin_host_default},
 		{"PORT", adc_libldms_msg_publish_plugin_port_default}
@@ -69,7 +69,7 @@ private:
 	const string vers;
 	const std::vector<string> tags;
 	string auth;
-	string channel;
+	string tag;
 	string port;
 	string host;
 	enum state state;
@@ -77,14 +77,14 @@ private:
 	enum mode mode;
 	bool configured;
 
-	int config(const string& dir, string_view shost, string_view sport, string_view sauth, string_view schannel) {
+	int config(const string& dir, string_view shost, string_view sport, string_view sauth, string_view stag) {
 		if (mode != pi_config)
 			return 2;
 		uid_t ui = geteuid();
 		port = sport;
 		host = shost;
 		auth = sauth;
-		channel = schannel;
+		tag = stag;
 		mode = pi_init;
 		configured = true;
 		return 0;
@@ -153,8 +153,8 @@ public:
 		string host = get(m, "HOST", env_prefix);
 		string port = get(m, "PORT", env_prefix);
 		string auth = get(m, "AUTH", env_prefix);
-		string channel = get(m, "CHANNEL", env_prefix);
-		return config(d, host, port, auth, channel);
+		string tag = get(m, "TAG", env_prefix);
+		return config(d, host, port, auth, tag);
 	}
         
 	const std::map< const std::string, const std::string> & get_option_defaults() {
@@ -174,7 +174,7 @@ public:
 		}
 		// fixme: try connect to ldmsd; libldms_msg_publish_plugin::initialize
 		std::error_code ec;
-		// attach msg channel
+		// attach msg tag
 		mode = pi_pub_or_final;
 		return 0;
 	}
