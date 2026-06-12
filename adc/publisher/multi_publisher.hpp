@@ -48,6 +48,8 @@ public:
 	/// @brief Resume all publishers
         virtual void resume() = 0;
 
+	/// @brief List names of all configured publishers
+	virtual std::vector< std::string >get_names() = 0;
 
 	virtual ~multi_publisher_api() {}
 };
