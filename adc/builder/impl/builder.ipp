@@ -1441,9 +1441,10 @@ set_lib_version:
 				goto mpi_out;
 		}
 		char *hostnames = (char *)calloc(size*MPI_MAX_PROCESSOR_NAME, 1); 
+		char myname[MPI_MAX_PROCESSOR_NAME];
 		int nlen;
-		MPI_Get_processor_name(hostnames + rank * MPI_MAX_PROCESSOR_NAME, &nlen);
-		MPI_Allgather(hostnames + rank * MPI_MAX_PROCESSOR_NAME,
+		MPI_Get_processor_name(myname, &nlen);
+		MPI_Allgather(myname,
 			    	MPI_MAX_PROCESSOR_NAME, 
 				MPI_CHAR,
 				hostnames,
