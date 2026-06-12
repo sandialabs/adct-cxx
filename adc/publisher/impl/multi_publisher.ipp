@@ -92,6 +92,15 @@ public:
 			element->resume();
 		}
 	}
+
+	std::vector< std::string > get_names()
+	{
+		std::vector< std::string > v(pvec.size());
+		for (auto& element : pvec) {
+			v.push_back( std::string(element->name()));
+		}
+		return v;
+	}
 };  // class multi_publisher
 
 } // namespace adc
