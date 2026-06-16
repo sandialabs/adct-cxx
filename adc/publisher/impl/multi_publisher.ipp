@@ -34,16 +34,18 @@ public:
 		}
 	}
 
-
         string_view version() const {
                 return vers;
         }
 
 	void add(std::shared_ptr<publisher_api> p) {
-		if (!p && debug) {
-			std::cout <<
-				"multi_publisher: null publisher add ignored."
-				<< std::endl;
+		if (!p) {
+			if (debug) {
+				std::cout <<
+					"multi_publisher: null publisher add ignored."
+					<< std::endl;
+			}
+			return;
 		}
 		pvec.push_back(p);
 		if (debug) {
@@ -96,8 +98,8 @@ public:
 	std::vector< std::string > get_names()
 	{
 		std::vector< std::string > v(pvec.size());
-		for (auto& element : pvec) {
-			v.push_back( std::string(element->name()));
+		for (size_t i = 0; i < pvec.size(); i++) {
+			v[i] = std::string(pvec[i]->name());
 		}
 		return v;
 	}
