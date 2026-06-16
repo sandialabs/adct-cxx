@@ -21,7 +21,9 @@ private:
 public:
 	none_plugin() : vers("1.0.0") , tags({"none"}) { }
 
-        int publish(std::shared_ptr<builder_api> /* b */) {
+        int publish(std::shared_ptr<builder_api> b) {
+		if (!b)
+			return EINVAL;
 		return 0;
 	}
 

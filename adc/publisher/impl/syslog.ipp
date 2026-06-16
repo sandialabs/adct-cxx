@@ -83,6 +83,8 @@ public:
 	}
 
         int publish(std::shared_ptr<builder_api> b) {
+		if (!b)
+			return EINVAL;
 		if (paused)
 			return 0;
 		if (priority == PRIORITY_UNSET_ADC_SYSLOG)
