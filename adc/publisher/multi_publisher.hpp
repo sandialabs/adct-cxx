@@ -34,6 +34,7 @@ public:
         virtual std::string_view version() const = 0;
 
 	/// @brief Add a configured and initialized publisher
+	/// Ignores null input, which the caller should not provide.
 	virtual void add(std::shared_ptr<publisher_api> pub) = 0;
 
 	/// @brief Finalize all added publishers

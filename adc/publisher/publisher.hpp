@@ -57,6 +57,9 @@ public:
 	/// @brief Publish the content of the builder
 	/// 
 	/// @param b converted to a single json object and published
+	/// @return 0 if ok or paused, 1 for unrecoverable failure already occured,
+	///         2 if not in publication mode (waiting config or done)
+	///         EINVAL (bad b), or other error code
 	virtual int publish(std::shared_ptr<builder_api> b) = 0;
 
 	/// @brief Configure the plugin with the options given.

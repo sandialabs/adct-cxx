@@ -56,6 +56,8 @@ public:
 
 	int publish(std::shared_ptr<builder_api> b)
        	{
+		if (!b)
+			return EINVAL;
 		if (state != ok)
 			return EBADFD;
 		int err = 0;

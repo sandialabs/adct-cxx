@@ -187,6 +187,8 @@ public:
 		state(ok), paused(false), mode(pi_config) {}
 
         int publish(std::shared_ptr<builder_api> b) {
+		if (!b)
+			return EINVAL;
 		if (paused)
 			return 0;
 		if (state != ok)
