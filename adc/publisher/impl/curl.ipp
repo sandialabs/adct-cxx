@@ -148,6 +148,7 @@ private:
 			string cmd = "(" + prog + 
 				" -X POST -s -w \"\n%{http_code}\n\" -H \"Content-Type: application/json\" -d @"
 				+ f + " " + url + " || /bin/rm -f " + f + ") &";
+			std::cout << "trying cmd:" << cmd << std::endl;
 			int err1 = std::system(cmd.c_str());
 			std::cout << "cmd:" << cmd << std::endl;
 			std::cout << err1 << std::endl;
@@ -158,6 +159,9 @@ private:
 				" -X POST -s -w \"\n%{http_code}\n\" -H \"Content-Type: application/json\" -d @"
 				+ f + " " + url + 
 				" > /dev/null 2>&1 ; /bin/rm -f " + f + ") &";
+			if (debug) {
+				std::cout << "trying cmd:" << qcmd << std::endl;
+			}
 			int err2 = std::system(qcmd.c_str());
 			if (debug) {
 				std::cout << err2 << std::endl;
@@ -197,7 +201,7 @@ public:
 				curl_send(fname); // send also removes file
 				return 0;
 			} else {
-				std::cout << "failed write" << std::endl;
+				std::cout << "failed write to " << fname << std::endl;
 				return 1;
 			}
 		}

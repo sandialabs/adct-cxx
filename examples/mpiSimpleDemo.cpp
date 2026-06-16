@@ -34,6 +34,11 @@ std::map<std::string, std::string> ldmsd_stream_publish_config =
 		{ "STREAM", "adc_publish_api" }
 	};
 
+std::map<std::string, std::string> curl_publish_config =
+	{
+		{ "STREAM", "adc_publish_api" }
+	};
+
 
 int start_publisher(std::shared_ptr<adc::publisher_api> pi, std::map<std::string, std::string>& pconfig ) {
 	int e = 0;
@@ -177,7 +182,7 @@ int main(int , char **)
 	std::shared_ptr< adc::publisher_api > p = f.get_publisher("stdout");
 	int pub_err = start_publisher(p, null_config);
 #else
-	std::shared_ptr< adc::publisher_api > p = f.get_publisher("ldmsd_stream_publish");
+	std::shared_ptr< adc::publisher_api > p = f.get_publisher("curl");
 	int pub_err = start_publisher(p, ldmsd_stream_publish_config);
 #endif
 

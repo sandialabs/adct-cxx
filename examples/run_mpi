@@ -8,7 +8,11 @@
 #SBATCH --account=$DEFAULT_ACCOUNT
 #SBATCH -N 2
 #SBATCH -n 4
+#SBATCH --licenses=gpfs
+#SBATCH --output %j-%t-%s.out 
 
 . local-install-list
 #check the cmake with mpi build
-srun --output %j-%t-%s.out -N 2 -n 4 $ADC_PREFIX/bin/mpi.simple.demo
+export OMPI_MCA_smsc="^knem"
+mpirun -N 2 -n 4 $ADC_PREFIX/bin/mpi.simple.demo
+##srun --output %j-%t-%s.out -N 2 -n 4 $ADC_PREFIX/bin/mpi.simple.demo

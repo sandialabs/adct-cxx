@@ -14,9 +14,14 @@ TEST_LDMS_PORT=412
 TEST_ALL_PUBS="curl:file:multifile:script:stdout:syslog:ldmsd_stream_publish:ldms_message_publish"
 TEST_LOCAL_PUBS="file:script:stdout:multifile"
 TEST_NET_PUBS="curl:syslog:ldmsd_stream_publish:ldms_message_publish"
+# mpi
+#TEST_ASF_PUBS="multifile:ldms_message_publish:curl"
+#serial
+TEST_ASF_PUBS="file:ldms_message_publish"
+TEST_ASF_PUBS="curl"
 
 # default the multi_publisher to node-local ones; can be overridden.
-export ADC_MULTI_PUBLISHER_NAMES=$TEST_LOCAL_PUBS
+export ADC_MULTI_PUBLISHER_NAMES=$TEST_ASF_PUBS
 
 # example host env; common to snl HPC clusters
 export ADC_HOST_SECTION_ENV="SNLCLUSTER:SNLNETWORK:SNLSITE:SNLSYSTEM:SNLOS"
@@ -46,7 +51,7 @@ export ADC_CURL_PLUGIN_DIRECTORY="/dev/shm/adc"
 export ADC_CURL_PLUGIN_PROG="/usr/bin/curl"
 export ADC_CURL_PLUGIN_PORT="443"
 export ADC_CURL_PLUGIN_URL="$TEST_ADC_URL"
-export ADC_CURL_PLUGIN_DEBUG="0"
+export ADC_CURL_PLUGIN_DEBUG="2"
 
 # environment variables for file serial code plugin
 export ADC_FILE_PLUGIN_DIRECTORY="."
@@ -65,7 +70,7 @@ export ADC_MULTIFILE_PLUGIN_RANK=""
 
 # environment variables for ldmsd_stream_publish subprocess plugin
 export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_DIRECTORY="/dev/shm/adc"
-export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_PROG="/usr/sbin/ldms_msg_publish"
+export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_PROG="/usr/sbin/ldms_message_publish"
 export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_TAG="adc_publish_api"
 export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_AUTH="$TEST_LDMS_AUTH"
 export ADC_LDMS_MESSAGE_PUBLISH_PLUGIN_PORT="$TEST_LDMS_PORT"

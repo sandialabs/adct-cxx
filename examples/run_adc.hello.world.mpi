@@ -20,4 +20,4 @@ else
 	exit 1
 fi
 export OMPI_MCA_smsc="^knem"
-mpirun -N 2 -n 4 ../cbuild.mpi/bin/adc.hello.world.mpi
+mpirun -N 2 -n 4 ../inst-mpi/bin/adc.hello.world.mpi
