@@ -99,6 +99,7 @@ set(adc_cxx_top_headers
 	adc/adc.hpp
 	adc/types.hpp
 	adc/factory.hpp
+	adc/utility.hpp
 	${CMAKE_BINARY_DIR}/adc/adc_config.h)
 
 set(adc_cxx_bld_headers
@@ -205,6 +206,10 @@ blt_add_executable(NAME mpi.demo.builder
 blt_add_executable(NAME mpi.simple.demo 
 	SOURCES examples/mpiSimpleDemo.cpp
 	DEPENDS_ON adc_cxx stdc++fs)
+
+blt_add_executable(NAME test.get.publisher
+	SOURCES examples/testGetPublisher.cpp
+	DEPENDS_ON adc_cxx)
 
 if (MPI_FOUND)
 blt_add_executable(NAME adc.hello.world.mpi 
