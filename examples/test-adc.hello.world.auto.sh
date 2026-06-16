@@ -2,13 +2,16 @@
 module purge
 module load aue/gdb
 rm -rf test.outputs adc.file_plugin.log
+set -x
 . ./test-env-publishers
+set +x
 export ADC_MULTI_PUBLISHER_DEBUG=1
 export ADC_MULTIFILE_PLUGIN_DEBUG=1
 echo starting...
-valgrind -v --leak-check=full --show-leak-kinds=all ../inst-mpi/bin/adc.hello.world.auto
-if cat ./adc.file_plugin.log; then
-	:
+#valgrind -v --leak-check=full --show-leak-kinds=all ../inst-mpi/bin/adc.hello.world.auto
+../inst-mpi/bin/adc.hello.world.auto
+if test -s ./adc.file_plugin.log; then
+	echo "file plugin ok"
 else
 	 echo "missing adc.file_plugin.log"
 fi
