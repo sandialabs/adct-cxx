@@ -277,7 +277,7 @@ private:
 	}
 
 public:
-	multifile_plugin() : vers("1.0.0") , tags({"none"}), state(ok), paused(false), mode(pi_config) { }
+	multifile_plugin() : vers("1.0.0") , tags({"none"}), debug(false), state(ok), paused(false), mode(pi_config) { }
 
 	int publish(std::shared_ptr<builder_api> b) {
 		if (!b)

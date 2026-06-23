@@ -420,7 +420,7 @@ void update_meminfo(bool debug)
 	}
 }
 
-builder::builder(void *mpi_communicator_p) : mpi_comm_p(mpi_communicator_p) {
+builder::builder(void *mpi_communicator_p) : debug(false), mpi_comm_p(mpi_communicator_p) {
 	const char *env = getenv("ADC_BUILDER_DEBUG");
 	if (env) {
 		debug = true;

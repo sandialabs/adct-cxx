@@ -197,6 +197,8 @@ private:
 	// this is private because it must be of a specific structure, not arbitrary json
 	boost::json::object d;
 	bool debug; ///< true if ADC_BUILDER_DEBUG exists in the environment
+
+	// get the type from the strind named section or element of d.
 	key_type kind(std::string_view name);
 
 	std::map< std::string, std::shared_ptr< builder > > sections;
