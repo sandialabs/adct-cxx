@@ -171,7 +171,7 @@ private:
 	}
 
 public:
-	curl_plugin() : vers("1.0.0") , state(ok), paused(false), mode(pi_config) { }
+	curl_plugin() : vers("1.0.0") , debug(false), state(ok), paused(false), mode(pi_config) { }
 
 	/*!
 	 */
