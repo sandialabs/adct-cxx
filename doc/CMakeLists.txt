@@ -1,4 +1,5 @@
 # CONFIG_FILE ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+# doc/Doxyfile is used for the github pages build of doc.
 
 set( DOXYGEN_DOXYFILE_ENCODING       UTF-8)
 set( DOXYGEN_PROJECT_NAME            "libadc-cxx" )

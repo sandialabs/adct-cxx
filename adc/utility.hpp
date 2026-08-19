@@ -27,7 +27,7 @@ ADC_VISIBLE std::string get_multifile_log_path(std::string_view dir, std::string
  * terminate has been called on the multi_publisher (which calls finalize).
  * On slow nfs-based file systems, some delay may be needed to ensure all
  * files are seen on the aggregating client.
- * @param match the result of an appropriate call to get_multifile_log_path.
+ * @param match the result of an appropriate call to get_multifile_log_path (a glob expression), or the user edit thereof.
  * @param old_paths the names of files that were successfully merged. May be empty;
  *        if not empty, deleting the files in the list is recommended.
  * @param debug if true, make more diagnostic noise.
