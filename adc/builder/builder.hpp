@@ -171,14 +171,17 @@ public:
 	
 	/// @brief Auto-populate "code" section with os-derived info at time of call,
 	/// and user-provided tag string, version subsection, and code_details subsection.
+	/// This data is typically invocation specific but rank invariant, for parallel codes.
 	///
 	/// The os derived info includes program full path, base name, and dynamically 
 	/// linked libraries.
+	/// @param tag arbitrary string label
+	/// @param version 
 	/// @param code_details additional info common to all invocations of the program,
 	///        for example information about static-linked libraries.
 	virtual void add_code_section(std::string tag, std::shared_ptr< builder_api > version, std::shared_ptr< builder_api > code_details) = 0;
 
-	/// @brief Populate build/install "configuration" information such as options enabled
+	/// @brief Populate build/install "configuration" information such as options enabled at build time.
 	/// @param build_details option list.
 	virtual void add_code_configuration_section(std::shared_ptr< builder_api > build_details) = 0;
 
