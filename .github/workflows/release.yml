@@ -10,20 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
     - name: Checkout Code
       uses: actions/checkout@v5
       with:
         submodules: recursive # Ensures submodules are fetched if you use them
 
-    - name: Pack Clean Source Archive
+    - name: Pack Archive
       run: |
         # Use git archive to bundle files while respecting your .gitattributes files
         git archive --format=tar.gz --prefix=mylibrary-${{ github.ref_name }}/ -o mylibrary-${{ github.ref_name }}.tar.gz HEAD
 
-    - name: Upload Archive to GitHub Release
-      uses: softprops/action-gh-release@v5
-      with:
-        files: mylibrary-${{ github.ref_name }}.tar.gz
+    - name: Create Release and Upload Archive
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release create "${{ github.ref_name }}" \
+          --title "Release ${{ github.ref_name }}" \
+          --generate-notes \
+          "mylibrary-${{ github.ref_name }}.tar.gz"
 
