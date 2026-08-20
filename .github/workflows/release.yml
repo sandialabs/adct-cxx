@@ -19,7 +19,7 @@ jobs:
     - name: Pack Archive
       run: |
         # Use git archive to bundle files while respecting your .gitattributes files
-        git archive --format=tar.gz --prefix=mylibrary-${{ github.ref_name }}/ -o mylibrary-${{ github.ref_name }}.tar.gz HEAD
+        git archive --format=tar.gz --prefix=adct-cxx-${{ github.ref_name }}/ -o adct-cxx-${{ github.ref_name }}.tar.gz HEAD
 
     - name: Create Release and Upload Archive
       env:
@@ -28,5 +28,5 @@ jobs:
         gh release create "${{ github.ref_name }}" \
           --title "Release ${{ github.ref_name }}" \
           --generate-notes \
-          "mylibrary-${{ github.ref_name }}.tar.gz"
+          "adct-cxx-${{ github.ref_name }}.tar.gz"
 
