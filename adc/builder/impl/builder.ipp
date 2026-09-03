@@ -16,7 +16,10 @@
 #include <cstdio>
 #include <cstdint>
 #include <boost/algorithm/string.hpp>
-#include <uuid/uuid.h>
+#include <iostream>
+#include <chrono>
+#include <random>
+#include <cstdint>
 #include <version>
 #if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 #include <span>
@@ -29,6 +32,75 @@
  * do not use language features beyond c++17.
  */
 
+
+struct UUIDString {
+    char data[37]; // 36 characters + 1 null-terminator
+    operator std::string_view() const { return std::string_view(data, 36); }
+};
+
+static std::array<uint8_t, 16> generate_uuidv7() {
+    std::array<uint8_t, 16> uuid{};
+
+    auto now = std::chrono::system_clock::now();
+    auto duration = now.time_since_epoch();
+    uint64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+    // Fill timestamp bytes 0 to 5 (Big-Endian network byte order)
+    uuid[0] = static_cast<uint8_t>((millis >> 40) & 0xFF);
+    uuid[1] = static_cast<uint8_t>((millis >> 32) & 0xFF);
+    uuid[2] = static_cast<uint8_t>((millis >> 24) & 0xFF);
+    uuid[3] = static_cast<uint8_t>((millis >> 16) & 0xFF);
+    uuid[4] = static_cast<uint8_t>((millis >> 8) & 0xFF);
+    uuid[5] = static_cast<uint8_t>(millis & 0xFF);
+
+    thread_local std::mt19937_64 gen([]() {
+        std::random_device rd;
+        return rd();
+    }());
+    thread_local std::uniform_int_distribution<uint64_t> dis(0, 0xFFFFFFFFFFFFFFFF);
+
+    uint64_t rand_high = dis(gen);
+    uint64_t rand_low = dis(gen);
+
+    // Unpack remaining bits into byte slots 6 to 15
+    uuid[6]  = static_cast<uint8_t>((rand_high >> 56) & 0xFF);
+    uuid[7]  = static_cast<uint8_t>((rand_high >> 48) & 0xFF);
+    uuid[8]  = static_cast<uint8_t>((rand_low >> 56) & 0xFF);
+    uuid[9]  = static_cast<uint8_t>((rand_low >> 48) & 0xFF);
+    uuid[10] = static_cast<uint8_t>((rand_low >> 40) & 0xFF);
+    uuid[11] = static_cast<uint8_t>((rand_low >> 32) & 0xFF);
+    uuid[12] = static_cast<uint8_t>((rand_low >> 24) & 0xFF);
+    uuid[13] = static_cast<uint8_t>((rand_low >> 16) & 0xFF);
+    uuid[14] = static_cast<uint8_t>((rand_low >> 8) & 0xFF);
+    uuid[15] = static_cast<uint8_t>(rand_low & 0xFF);
+
+    // Set uuid version
+    uuid[6] = (uuid[6] & 0x0F) | 0x70;
+
+    // Set Variant '10'
+    uuid[8] = (uuid[8] & 0x3F) | 0x80;
+
+    return uuid;
+}
+
+static UUIDString uuid_to_string(const std::array<uint8_t, 16>& uuid) {
+    UUIDString result{};
+    char* ptr = result.data;
+
+    static const char hex[] = "0123456789abcdef";
+
+    for (size_t i = 0; i < 16; ++i) {
+        if (i == 4 || i == 6 || i == 8 || i == 10) {
+            *ptr++ = '-';
+        }
+        *ptr++ = hex[(uuid[i] >> 4) & 0x0F];
+        *ptr++ = hex[uuid[i] & 0x0F];
+    }
+    *ptr = '\0';
+
+    return result;
+}
+
 namespace adc {
 
 // \return true if name is not allowed in our json protocol.
@@ -36,7 +108,7 @@ namespace adc {
 // RFCs, but we may want to warn about them in future.
 // / is not banned though it interferes with search using RFC6901
 // . is not banned though it interferes with search using RFC9535
-inline bool badkey(std::string_view /* name */) 
+inline bool badkey(std::string_view /* name */)
 {
 	// return (name.find_first_of("./") != std::string::npos);
 	// could put a warning here in debug mode
@@ -466,10 +538,9 @@ void builder::add_header_section(std::string_view application_name)
 			{ "version", adc::enum_version.name}
 		};
 	vv["tags"] = boost::json::value_from(adc::enum_version.tags);
-	uuid_t uuid;
-	uuid_generate_random(uuid);
-	char uuidbuf[40];
-	uuid_unparse_lower(uuid, uuidbuf);
+	auto uuid = generate_uuidv7();
+	UUIDString uuid_str = uuid_to_string(uuid);
+
 	boost::json::value jv = {
 		{"adc_api_version", vv },
 		{"timestamp", ts_ns },
@@ -477,7 +548,7 @@ void builder::add_header_section(std::string_view application_name)
 		{"user", uname },
 		{"uid", std::to_string(uid) },
 		{"application", application_name},
-		{"uuid", uuidbuf }
+		{"uuid", static_cast<std::string_view>(uuid_str) }
 	};
 	d["header"] = jv;
 }
@@ -639,7 +710,7 @@ void builder::add_code_section(std::string tag, std::shared_ptr< builder_api > v
 		{"path", fullpath},
 		{"version", version_derived ?  version_derived->d : no_details},
 		{"libs", boost::json::value_from(libs) },
-		{"details", code_details_derived ? 
+		{"details", code_details_derived ?
 			code_details_derived->flatten() : no_details}
 	};
 	d["code"] = jv;
@@ -939,8 +1010,8 @@ static void get_scalar(field& f, scalar_type st, boost::json::value *v)
 template<typename T>
 static void fill_array(field& f, scalar_type st, boost::json::array& a) {
 	auto a_len = a.size();
-	//c++20 std::shared_ptr<T[]> sa = std::make_shared<T[]>(a_len); 
-	std::shared_ptr<T[]> sa(new T[a_len]); 
+	//c++20 std::shared_ptr<T[]> sa = std::make_shared<T[]>(a_len);
+	std::shared_ptr<T[]> sa(new T[a_len]);
 	size_t i;
 	auto json_type = scalar_type_representation(st);
 	for (i = 0; i < a_len; i++) {
@@ -959,12 +1030,12 @@ static void fill_array(field& f, scalar_type st, boost::json::array& a) {
 	f.data = variant( sa ) ;
 	f.vp = (std::get< std::shared_ptr<T[]> >(f.data)).get();
 	f.count = a_len;
-}; 
+};
 
 static void fill_array_u64(field& f, boost::json::array& a) {
 	auto a_len = a.size();
-	//c++20 std::shared_ptr<uint64_t[]> sa = std::make_shared<uint64_t[]>(a_len); 
-	std::shared_ptr<uint64_t[]> sa(new uint64_t[a_len]); 
+	//c++20 std::shared_ptr<uint64_t[]> sa = std::make_shared<uint64_t[]>(a_len);
+	std::shared_ptr<uint64_t[]> sa(new uint64_t[a_len]);
 	size_t i;
 	for (i = 0; i < a_len; i++) {
 		boost::json::string *s = a[i].if_string();
@@ -972,7 +1043,7 @@ static void fill_array_u64(field& f, boost::json::array& a) {
 			std::string ss (*s);
 			std::istringstream iss(ss);
 			uint64_t x;
-			iss >> x; 
+			iss >> x;
 			if (!iss.fail()) {
 				sa[i] = x;
 			} else {
@@ -985,7 +1056,7 @@ static void fill_array_u64(field& f, boost::json::array& a) {
 	f.data = variant( sa ) ;
 	f.vp = (std::get< std::shared_ptr<uint64_t[]> >(f.data)).get();
 	f.count = a_len;
-}; 
+};
 
 /* copy pairs of a matching type st into matching positions
  * of a shared array of complex. type mismatches are silently ignored, their
@@ -996,8 +1067,8 @@ static void fill_array_u64(field& f, boost::json::array& a) {
 template<typename T>
 static void fill_array_complex(field& f, boost::json::array& a) {
 	auto a_len = a.size();
-	// c++20: std::shared_ptr<std::complex<T>[]> sa = std::make_shared<std::complex<T>[]>(a_len); 
-	std::shared_ptr<std::complex<T>[]> sa(new std::complex<T>[a_len]); 
+	// c++20: std::shared_ptr<std::complex<T>[]> sa = std::make_shared<std::complex<T>[]>(a_len);
+	std::shared_ptr<std::complex<T>[]> sa(new std::complex<T>[a_len]);
 	size_t i;
 	for (i = 0; i < a_len; i++) {
 		if ( a[i].kind() == boost::json::kind::array) {
@@ -1008,8 +1079,8 @@ static void fill_array_complex(field& f, boost::json::array& a) {
 			}
 			boost::system::error_code ecr;
 			boost::system::error_code eci;
-		       	T re = pair.as_array()[0].to_number<T>(ecr);
-		       	T im = pair.as_array()[1].to_number<T>(eci);
+			T re = pair.as_array()[0].to_number<T>(ecr);
+			T im = pair.as_array()[1].to_number<T>(eci);
 			if (!(ecr.failed() || eci.failed())) {
 				sa[i] = { re, im };
 			} else {
@@ -1029,8 +1100,8 @@ static void fill_array_complex(field& f, boost::json::array& a) {
  */
 void fill_array_bool(field& f, boost::json::array& a) {
 	auto a_len = a.size();
-	//c++20 std::shared_ptr<T[]> sa = std::make_shared<T[]>(a_len); 
-	std::shared_ptr<bool[]> sa(new bool[a_len]); 
+	//c++20 std::shared_ptr<T[]> sa = std::make_shared<T[]>(a_len);
+	std::shared_ptr<bool[]> sa(new bool[a_len]);
 	size_t i;
 	for (i = 0; i < a_len; i++) {
 		bool* bptr = a[i].if_bool();
@@ -1047,8 +1118,8 @@ void fill_array_bool(field& f, boost::json::array& a) {
 
 void fill_array_string(field& f, boost::json::array& a) {
 	auto a_len = a.size();
-	//c++20 std::shared_ptr<T[]> sa = std::make_shared<T[]>(a_len); 
-	std::shared_ptr<std::string[]> sa(new std::string[a_len]); 
+	//c++20 std::shared_ptr<T[]> sa = std::make_shared<T[]>(a_len);
+	std::shared_ptr<std::string[]> sa(new std::string[a_len]);
 	size_t i;
 	for (i = 0; i < a_len; i++) {
 		boost::json::string* sptr = a[i].if_string();
@@ -1301,7 +1372,7 @@ int64_t builder::get_value_int64(std::string_view path) {
 	case cp_char32:
 		i = *static_cast<const uint64_t *>(f.vp);
 		break;
-	case cp_char: 
+	case cp_char:
 		[[fallthrough]];
 	case cp_int8:
 		[[fallthrough]];
@@ -1416,7 +1487,7 @@ void builder::add_mpi_section(std::string_view name, void *mpi_comm_p, adc_mpi_f
 	#endif
 #endif
 		char lv[MPI_MAX_LIBRARY_VERSION_STRING];
-		{ 
+		{
 		int sz = 0;
 		err = MPI_Get_library_version(lv, &sz);
 		}
@@ -1440,12 +1511,12 @@ set_lib_version:
 			if (err)
 				goto mpi_out;
 		}
-		char *hostnames = (char *)calloc(size*MPI_MAX_PROCESSOR_NAME, 1); 
+		char *hostnames = (char *)calloc(size*MPI_MAX_PROCESSOR_NAME, 1);
 		char myname[MPI_MAX_PROCESSOR_NAME];
 		int nlen;
 		MPI_Get_processor_name(myname, &nlen);
 		MPI_Allgather(myname,
-			    	MPI_MAX_PROCESSOR_NAME, 
+				MPI_MAX_PROCESSOR_NAME,
 				MPI_CHAR,
 				hostnames,
 				MPI_MAX_PROCESSOR_NAME,

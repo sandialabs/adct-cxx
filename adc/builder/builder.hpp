@@ -27,7 +27,7 @@ std::string format_timespec_8601(struct timespec& ts);
 /// @return utc seconds.nanoseconds formatted string based on ts
 std::string format_timespec_utc_ns(struct timespec& ts);
 
-inline version builder_api_version("1.0.0", {"none"});
+inline version builder_api_version("1.0.1", {"none"});
 
 /** @addtogroup builder_add_host_options
  *  @{

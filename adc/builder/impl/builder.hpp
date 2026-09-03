@@ -27,7 +27,7 @@ bool array_contains_string( boost::json::array& av, string_view uuid);
 std::vector<std::string> split_string(const std::string& s, char delimiter);
 
 
-inline version builder_version("1.0.0", {"none"});
+inline version builder_version("1.0.1", {"none"});
 
 /*! \brief Implementation of builder_api with optional (compile-time)
  support of MPI. If compiled without MPI, the mpi-related calls devolve
