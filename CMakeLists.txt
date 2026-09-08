@@ -35,9 +35,22 @@ include(${BLT_SOURCE_DIR}/SetupBLT.cmake)
 # find_package(adiak PATHS ENV ADIAK_PREFIX)
 find_package(adiak)
 
+blt_import_library( NAME crypto
+			LINK_FLAGS	-lcrypto)
+
 # pull in libuuid, assumed in /usr
-blt_import_library( NAME                     uuid
-                    LINK_FLAGS               -luuid)
+blt_import_library( NAME        uuid
+                    LINK_FLAGS  -luuid)
+
+# get cairo for mime-encode testing
+# get fontconfig for fcfini to reduce valgrind noise about still-in-use font data
+find_package(PkgConfig REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(Cairo REQUIRED IMPORTED_TARGET cairo)
+pkg_check_modules(Fontconfig REQUIRED IMPORTED_TARGET fontconfig)
+blt_import_library(	NAME        cairo
+			LINK_FLAGS  -lcairo -lfontconfig -lfreetype
+)
                     
 if (ENABLE_DOC)
   add_subdirectory(doc)
@@ -199,6 +212,10 @@ blt_add_executable(NAME adc.hello.world.auto
 	SOURCES	examples/adcHelloWorldAuto.cpp
 	DEPENDS_ON adc_cxx stdc++fs)
 
+blt_add_executable(NAME adc.hello.world.mime
+	SOURCES	examples/adcHelloWorldMime.cpp
+	DEPENDS_ON adc_cxx stdc++fs crypto cairo)
+
 blt_add_executable(NAME mpi.demo.builder
 	SOURCES	examples/mpiDemoBuilder.cpp
 	DEPENDS_ON adc_cxx stdc++fs)
@@ -220,6 +237,6 @@ install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.mpi
 	TYPE BIN )
 endif()
 
-install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.auto ${CMAKE_BINARY_DIR}/bin/demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.simple.demo  ${CMAKE_BINARY_DIR}/bin/test.builder
+install(PROGRAMS ${CMAKE_BINARY_DIR}/bin/adc.hello.world.auto ${CMAKE_BINARY_DIR}/bin/adc.hello.world.mime ${CMAKE_BINARY_DIR}/bin/demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.demo.builder  ${CMAKE_BINARY_DIR}/bin/mpi.simple.demo  ${CMAKE_BINARY_DIR}/bin/test.builder
 	TYPE BIN )
 
